@@ -107,10 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add ripple effect
             createRipple(e, chatButton);
             
-            // Prevent body scroll when contact options are open on mobile
-            if (window.innerWidth <= 576) {
-                document.body.style.overflow = isContactOpen ? 'hidden' : '';
-            }
+            // Don't prevent body scroll when contact options are open on mobile
+            // This was causing the scroll issue
         });
         
         // Create ripple effect function
@@ -146,11 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 isContactOpen = false;
                 chatButton.classList.remove('active');
                 contactOptions.classList.remove('active');
-                
-                // Restore body scroll on mobile
-                if (window.innerWidth <= 576) {
-                    document.body.style.overflow = '';
-                }
             }
         });
         
@@ -160,11 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 isContactOpen = false;
                 chatButton.classList.remove('active');
                 contactOptions.classList.remove('active');
-                
-                // Restore body scroll on mobile
-                if (window.innerWidth <= 576) {
-                    document.body.style.overflow = '';
-                }
             }
         });
         
@@ -174,7 +162,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 isContactOpen = false;
                 chatButton.classList.remove('active');
                 contactOptions.classList.remove('active');
-                document.body.style.overflow = '';
             }
         });
         
