@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="articleTitle">Article - IlhamStore</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional styles specific to article view page */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 10px 15px;
+            background: var(--white);
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .breadcrumb-item:not(:last-child)::after {
+            content: '/';
+            margin: 0 10px;
+            color: var(--medium-gray);
+        }
+        
+        .breadcrumb-link {
+            color: var(--dark-gray);
+            transition: all 0.3s ease;
+        }
+        
+        .breadcrumb-link:hover {
+            color: #ff0000;
+        }
+        
+        .breadcrumb-current {
+            color: var(--medium-gray);
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 4px;
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .back-button:hover {
+            color: #ff0000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .back-button i {
+            margin-right: 8px;
+        }
+        
+        .article-container {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 20px 0;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .article-header {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .article-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .article-header-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: var(--white);
+        }
+        
+        .article-category {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        /* Category colors */
+        .category-news {
+            background-color: #007bff;
+        }
+        
+        .category-tutorial {
+            background-color: #28a745;
+        }
+        
+        .category-update {
+            background-color: #17a2b8;
+        }
+        
+        .category-promotion {
+            background-color: #ffc107;
+            color: #333;
+        }
+        
+        .category-sports {
+            background-color: #dc3545;
+        }
+        
+        .category-celebrity {
+            background-color: #6f42c1;
+        }
+        
+        .category-entertainment {
+            background-color: #fd7e14;
+        }
+        
+        .category-movie {
+            background-color: #e83e8c;
+        }
+        
+        .category-mobile {
+            background-color: #20c997;
+        }
+        
+        .category-electronics {
+            background-color: #6610f2;
+        }
+        
+        .category-technology {
+            background-color: #0056b3;
+        }
+        
+        .category-health {
+            background-color: #28a745;
+        }
+        
+        .category-travel {
+            background-color: #fd7e14;
+        }
+        
+        .category-food {
+            background-color: #e83e8c;
+        }
+        
+        .category-fashion {
+            background-color: #6f42c1;
+        }
+        
+        .category-business {
+            background-color: #343a40;
+        }
+        
+        .category-games {
+            background-color: #e91e63;
+        }
+        
+        .category-islamic {
+            background-color: #009688;
+        }
+        
+        .category-motivation {
+            background-color: #9c27b0;
+        }
+        
+        .article-title {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .article-meta {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .article-meta i {
+            margin-right: 5px;
+        }
+        
+        .article-meta span:not(:last-child)::after {
+            content: '•';
+            margin: 0 10px;
+        }
+        
+        .article-content {
+            padding: 30px;
+        }
+        
+        .article-content h1,
+        .article-content h2,
+        .article-content h3,
+        .article-content h4,
+        .article-content h5,
+        .article-content h6 {
+            margin: 20px 0 10px;
+            color: var(--dark-gray);
+        }
+        
+        .article-content h1 {
+            font-size: 28px;
+        }
+        
+        .article-content h2 {
+            font-size: 24px;
+        }
+        
+        .article-content h3 {
+            font-size: 20px;
+        }
+        
+        .article-content h4 {
+            font-size: 18px;
+        }
+        
+        .article-content h5 {
+            font-size: 16px;
+        }
+        
+        .article-content h6 {
+            font-size: 14px;
+        }
+        
+        .article-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .article-content ul,
+        .article-content ol {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        .article-content li {
+            margin-bottom: 8px;
+        }
+        
+        .article-content blockquote {
+            border-left: 4px solid #ff0000;
+            padding: 10px 15px;
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.05);
+            font-style: italic;
+        }
+        
+        .article-content a {
+            color: #ff0000;
+            text-decoration: underline;
+        }
+        
+        .article-content a:hover {
+            text-decoration: none;
+        }
+        
+        /* Related Articles */
+        .related-articles {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .related-articles h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--dark-gray);
+        }
+        
+        .related-articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .related-article-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .related-article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .related-article-img {
+            height: 120px;
+            overflow: hidden;
+        }
+        
+        .related-article-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .related-article-card:hover .related-article-img img {
+            transform: scale(1.05);
+        }
+        
+        .related-article-info {
+            padding: 15px;
+        }
+        
+        .related-article-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--dark-gray);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .related-article-category {
+            display: inline-block;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        
+        .related-article-meta {
+            font-size: 12px;
+            color: var(--medium-gray);
+        }
+        
+        .related-article-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--dark-gray);
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .related-article-link:hover {
+            color: #ff0000;
+        }
+        
+        /* Loading Spinner */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--dark-gray);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Error Message */
+        .error-message {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            border: 1px solid var(--light-gray);
+        }
+        #errorMessage {
+            display: none;
+        }
+
+        #articleContent {
+            display: none;
+        }
+        
+        .error-message i {
+            font-size: 48px;
+            color: var(--error-color);
+            margin-bottom: 15px;
+        }
+        
+        .error-message h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--dark-gray);
+        }
+        
+        .error-message p {
+            color: var(--medium-gray);
+            margin-bottom: 20px;
+        }
+        
+        .error-message .btn {
+            padding: 8px 16px;
+            background: var(--gradient-contact);
+            color: var(--white);
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        /* Notification Container */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .notification {
+            padding: 15px 20px;
+            border-radius: 4px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background-color: var(--success-color);
+        }
+        
+        .notification.error {
+            background-color: var(--error-color);
+        }
+        
+        .notification.warning {
+            background-color: var(--warning-color);
+        }
+        
+        .notification.info {
+            background-color: var(--info-color);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .related-articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .article-header {
+                height: 200px;
+            }
+            
+            .article-title {
+                font-size: 24px;
+            }
+            
+            .article-content {
+                padding: 20px;
+            }
+            
+            .related-articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .article-header {
+                height: 180px;
+            }
+            
+            .article-title {
+                font-size: 20px;
+            }
+            
+            .article-content {
+                padding: 15px;
+            }
+            
+            .related-articles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo-container">
+                    <img src="https://picsum.photos/seed/logo/40/40.jpg" alt="IlhamStore Logo" class="logo">
+                    <div class="logo-text">
+                        <a href="../index.html" class="logo-name">IlhamStore</a>
+                        <div class="tagline">👉 Click. Buy. Care.</div>
+                    </div>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" class="search-box" placeholder="Search products..." aria-label="Search products">
+                    <button class="clear-btn" title="Clear search" aria-label="Clear search"><i class="fas fa-times"></i></button>
+                    <button class="search-btn" title="Search" aria-label="Search"><i class="fas fa-search"></i></button>
+                    <div class="search-results" role="region" aria-live="polite"></div>
+                </div>
+                
+                <a href="../user/login.html" class="account-btn" id="accountBtn" aria-label="Account">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="accountText">Account</span>
+                </a>
+                
+                <button class="mobile-menu-btn" title="Open mobile menu" aria-label="Open mobile menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Section -->
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../pages/articles.html" class="nav-link">Articles</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../pages/cv-resume.html" class="nav-link">CV/Resume</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../pages/order-track.html" class="nav-link">Order Track</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../pages/e-products.html" class="nav-link">E-Products</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">About Us <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <a href="../pages/about.html" class="dropdown-item">About Us</a>
+                        <a href="../pages/faq.html" class="dropdown-item">FAQ</a>
+                        <a href="../pages/support.html" class="dropdown-item">Support</a>
+                        <a href="../pages/refund-policy.html" class="dropdown-item">Refund Policy</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu">
+        <div class="mobile-nav-header">
+            <h3>Menu</h3>
+            <button class="mobile-nav-close" title="Close mobile menu" aria-label="Close mobile menu"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="mobile-nav-list">
+            <li class="mobile-nav-item">
+                <a href="../index.html" class="mobile-nav-link">Home</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="../pages/articles.html" class="mobile-nav-link">Articles</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="../pages/cv-resume.html" class="mobile-nav-link">CV/Resume</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="../pages/order-track.html" class="mobile-nav-link">Order Track</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="../pages/e-products.html" class="mobile-nav-link">E-Products</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link">About Us</a>
+                <ul class="mobile-dropdown">
+                    <li><a href="../pages/about.html" class="mobile-dropdown-item">About Us</a></li>
+                    <li><a href="../pages/faq.html" class="mobile-dropdown-item">FAQ</a></li>
+                    <li><a href="../pages/support.html" class="mobile-dropdown-item">Support</a></li>
+                    <li><a href="../pages/refund-policy.html" class="mobile-dropdown-item">Refund Policy</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Loading Spinner -->
+        <div class="loading" id="loadingSpinner">
+        <div id="articleContent">
+        </div>
+        
+        <!-- Article Content (Hidden by default) -->
+        <div id="articleContent">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <div class="breadcrumb-item">
+                    <a href="../index.html" class="breadcrumb-link">Home</a>
+                </div>
+                <div class="breadcrumb-item">
+                    <a href="../pages/articles.html" class="breadcrumb-link">Articles</a>
+                </div>
+                <div class="breadcrumb-item">
+                    <span class="breadcrumb-current" id="breadcrumbTitle">Article</span>
+                </div>
+            </div>
+            
+            <!-- Back Button -->
+            <a href="../pages/articles.html" class="back-button" aria-label="Back to articles">
+                <i class="fas fa-arrow-left"></i> Back to Articles
+            </a>
+            
+            <!-- Article Container -->
+            <div class="article-container">
+                <div class="article-header">
+                    <img id="articleImage" src="" alt="Article Image">
+                    <div class="article-header-overlay">
+                        <span id="articleCategory" class="article-category"></span>
+                        <h1 id="articleTitleDisplay" class="article-title"></h1>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> <span id="articleDate"></span></span>
+                            <span><i class="fas fa-user"></i> Admin</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-content" id="articleBody">
+                    <!-- Article content will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Related Articles -->
+            <div class="related-articles">
+                <h3>Related Articles</h3>
+                <div class="related-articles-grid" id="relatedArticlesGrid">
+                    <!-- Related articles will be loaded here -->
+                </div>
+            </div>
+        <div class="error-message" id="errorMessage">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Article Not Found</h3>
+            <p>We couldn't find the article you're looking for. It may have been removed or you may have followed a broken link.</p>
+            <a href="../pages/articles.html" class="btn">View All Articles</a>
+        </div>
+            <p>We couldn't find the article you're looking for. It may have been removed or you may have followed a broken link.</p>
+            <a href="../pages/articles.html" class="btn">View All Articles</a>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About IlhamStore</h3>
+                    <p>Your one-stop shop for digital products, apps, games, and gift cards.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../pages/articles.html">Articles</a></li>
+                        <li><a href="../pages/cv-resume.html">CV/Resume</a></li>
+                        <li><a href="../pages/order-track.html">Order Track</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="../pages/faq.html">FAQ</a></li>
+                        <li><a href="../pages/contact.html">Contact Us</a></li>
+                        <li><a href="../pages/refund-policy.html">Refund Policy</a></li>
+                        <li><a href="../pages/terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Tiktok</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Donation Info Box -->
+            <div class="donation-info">
+                <div class="donation-stats">
+                    <h3>Our Charity Impact</h3>
+                    <div class="donation-row">
+                        <span class="donation-label">This month we fund:</span>
+                        <span class="donation-value" id="currentDonation">৳15,000</span>
+                    </div>
+                    <div class="donation-row">
+                        <span class="donation-label">Last month we donated:</span>
+                        <div class="charity-details">
+                            <span class="charity-name">Charity Foundation</span>
+                            <span class="charity-amount">৳12,500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 IlhamStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script src="../assets/js/script.js"></script>
+    <script>
+        // Get article ID from URL
+        function getArticleIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+        
+        // Load article data
+        function loadArticle() {
+            const articleId = getArticleIdFromUrl();
+            
+            if (!articleId) {
+                showError();
+                return;
+            }
+            
+            // Get articles from localStorage
+            const savedArticles = localStorage.getItem('articles');
+            let articles = [];
+            
+            if (savedArticles) {
+                articles = JSON.parse(savedArticles);
+            }
+            
+            // Find the article with the matching ID
+            const article = articles.find(a => a.id == articleId);
+            
+            if (!article) {
+                showError();
+                return;
+            }
+            
+            // Update page title
+            document.title = `${article.title} - IlhamStore`;
+            document.getElementById('articleTitle').textContent = article.title;
+            document.getElementById('breadcrumbTitle').textContent = article.title;
+            
+            // Update article display
+            document.getElementById('articleTitleDisplay').textContent = article.title;
+            document.getElementById('articleCategory').textContent = article.category.charAt(0).toUpperCase() + article.category.slice(1);
+            document.getElementById('articleCategory').className = `article-category category-${article.category}`;
+            document.getElementById('articleDate').textContent = new Date(article.date).toLocaleDateString();
+            document.getElementById('articleImage').src = article.image || `https://picsum.photos/seed/article${article.id}/1200/600.jpg`;
+            document.getElementById('articleBody').innerHTML = article.content;
+            
+            // Load related articles
+            loadRelatedArticles(article);
+            
+            // Show article content
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('articleContent').style.display = 'block';
+            
+            // Show notification
+            showNotification('Article loaded successfully', 'success');
+        }
+        
+        // Load related articles
+        function loadRelatedArticles(currentArticle) {
+            const relatedArticlesGrid = document.getElementById('relatedArticlesGrid');
+            relatedArticlesGrid.innerHTML = '';
+            
+            // Get articles from localStorage
+            const savedArticles = localStorage.getItem('articles');
+            let articles = [];
+            
+            if (savedArticles) {
+                articles = JSON.parse(savedArticles);
+            }
+            
+            // Filter articles (same category, exclude current article)
+            const relatedArticles = articles
+                .filter(article => article.category === currentArticle.category && article.id != currentArticle.id)
+                .slice(0, 3); // Get max 3 related articles
+            
+            if (relatedArticles.length === 0) {
+                relatedArticlesGrid.innerHTML = '<p>No related articles found.</p>';
+                return;
+            }
+            
+            // Create related article cards
+            relatedArticles.forEach(article => {
+                const card = document.createElement('div');
+                card.className = 'related-article-card';
+                
+                card.innerHTML = `
+                    <div class="related-article-img">
+                        <img src="${article.image || `https://picsum.photos/seed/article${article.id}/400/250.jpg`}" alt="${article.title}">
+                    </div>
+                    <div class="related-article-info">
+                        <span class="related-article-category category-${article.category}">${article.category.charAt(0).toUpperCase() + article.category.slice(1)}</span>
+                        <h4 class="related-article-title">${article.title}</h4>
+                        <div class="related-article-meta">${new Date(article.date).toLocaleDateString()}</div>
+                        <a href="article-view.html?id=${article.id}" class="related-article-link">Read Article</a>
+                    </div>
+                `;
+                
+                relatedArticlesGrid.appendChild(card);
+            });
+        }
+        
+        // Show error message
+        function showError() {
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'block';
+            showNotification('Article not found', 'error');
+        }
+        
+        // Notification function
+        function showNotification(message, type = 'info') {
+            const notificationContainer = document.getElementById('notificationContainer');
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            // Add to container
+            notificationContainer.appendChild(notification);
+            
+            // Trigger animation
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadArticle();
+        });
+    </script>
+</body>
+</html>

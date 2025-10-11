@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Articles - IlhamStore</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional styles specific to articles page */
+        .page-title {
+            font-size: 32px;
+            color: var(--dark-gray);
+            text-align: center;
+            margin: 40px 0 30px;
+            position: relative;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--gradient-contact);
+        }
+        
+        .category-filter-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .category-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .category-dropdown-btn {
+            background: var(--white);
+            color: var(--dark-gray);
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            min-width: 200px;
+            justify-content: space-between;
+        }
+        
+        .category-dropdown-btn:hover {
+            border-color: var(--dark-gray);
+        }
+        
+        .category-dropdown-btn:focus {
+            outline: 2px solid var(--dark-gray);
+            outline-offset: 2px;
+        }
+        
+        .category-dropdown-btn i {
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .category-dropdown.active .category-dropdown-btn i {
+            transform: rotate(180deg);
+        }
+        
+        .category-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            margin-top: 5px;
+            display: none;
+            overflow: hidden;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .category-dropdown.active .category-dropdown-menu {
+            display: block;
+        }
+        
+        .category-option {
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-option:hover {
+            background: var(--gradient-light);
+        }
+        
+        .category-option.active {
+            background: var(--gradient-contact);
+            color: var(--white);
+        }
+        
+        .category-color-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        /* Articles Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .article-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .article-img {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .article-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .article-card:hover .article-img img {
+            transform: scale(1.05);
+        }
+        
+        .article-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .article-category {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--white);
+            align-self: flex-start;
+        }
+        
+        .article-category i {
+            margin-right: 5px;
+        }
+        
+        /* Category colors */
+        .category-news {
+            background-color: #007bff;
+        }
+        
+        .category-tutorial {
+            background-color: #28a745;
+        }
+        
+        .category-update {
+            background-color: #17a2b8;
+        }
+        
+        .category-promotion {
+            background-color: #ffc107;
+            color: #333;
+        }
+        
+        .category-sports {
+            background-color: #dc3545;
+        }
+        
+        .category-celebrity {
+            background-color: #6f42c1;
+        }
+        
+        .category-entertainment {
+            background-color: #fd7e14;
+        }
+        
+        .category-movie {
+            background-color: #e83e8c;
+        }
+        
+        .category-mobile {
+            background-color: #20c997;
+        }
+        
+        .category-electronics {
+            background-color: #6610f2;
+        }
+        
+        .category-technology {
+            background-color: #0056b3;
+        }
+        
+        .category-health {
+            background-color: #28a745;
+        }
+        
+        .category-travel {
+            background-color: #fd7e14;
+        }
+        
+        .category-food {
+            background-color: #e83e8c;
+        }
+        
+        .category-fashion {
+            background-color: #6f42c1;
+        }
+        
+        .category-business {
+            background-color: #343a40;
+        }
+        
+        .category-games {
+            background-color: #e91e63;
+        }
+        
+        .category-islamic {
+            background-color: #009688;
+        }
+        
+        .category-motivation {
+            background-color: #9c27b0;
+        }
+        
+        .article-title {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--dark-gray);
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .article-excerpt {
+            font-size: 14px;
+            color: var(--medium-gray);
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: var(--medium-gray);
+        }
+        
+        .read-more {
+            color: var(--dark-gray);
+            font-weight: 500;
+            display: block;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        .read-more:hover {
+            color: #ff0000;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            margin: 40px 0;
+        }
+        
+        .pagination-btn {
+            padding: 8px 12px;
+            border: 1px solid var(--light-gray);
+            background: var(--white);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .pagination-btn:hover {
+            background: var(--gradient-light);
+        }
+        
+        .pagination-btn.active {
+            background: var(--gradient-contact);
+            color: var(--white);
+            border-color: var(--dark-gray);
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-info {
+            margin: 0 10px;
+            font-size: 14px;
+            color: var(--medium-gray);
+        }
+        
+        /* Loading Spinner */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--dark-gray);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* No Articles Message */
+        .no-articles {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .no-articles i {
+            font-size: 48px;
+            color: var(--medium-gray);
+            margin-bottom: 15px;
+        }
+
+        #loadingSpinner {
+            display: none;
+        }
+        
+        .no-articles h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--dark-gray);
+        }
+        
+        .no-articles p {
+            color: var(--medium-gray);
+            margin-bottom: 20px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .articles-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .articles-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-dropdown-btn {
+                font-size: 14px;
+                padding: 10px 15px;
+                min-width: 170px;
+            }
+            
+            .pagination {
+                flex-wrap: wrap;
+            }
+            
+            .pagination-info {
+                width: 100%;
+                text-align: center;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo-container">
+                    <img src="https://picsum.photos/seed/logo/40/40.jpg" alt="IlhamStore Logo" class="logo">
+                    <div class="logo-text">
+                        <a href="../index.html" class="logo-name">IlhamStore</a>
+                        <div class="tagline">👉 Click. Buy. Care.</div>
+                    </div>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" class="search-box" placeholder="Search products..." aria-label="Search products">
+                    <button class="clear-btn" title="Clear search" aria-label="Clear search"><i class="fas fa-times"></i></button>
+                    <button class="search-btn" title="Search" aria-label="Search"><i class="fas fa-search"></i></button>
+                    <div class="search-results" role="region" aria-live="polite"></div>
+                </div>
+                
+                <a href="../user/login.html" class="account-btn" id="accountBtn" aria-label="Account">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="accountText">Account</span>
+                </a>
+                
+                <button class="mobile-menu-btn" title="Open mobile menu" aria-label="Open mobile menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Section -->
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="articles.html" class="nav-link">Articles</a>
+                </li>
+                <li class="nav-item">
+                    <a href="cv-resume.html" class="nav-link">CV/Resume</a>
+                </li>
+                <li class="nav-item">
+                    <a href="order-track.html" class="nav-link">Order Track</a>
+                </li>
+                <li class="nav-item">
+                    <a href="e-products.html" class="nav-link">E-Products</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">About Us <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <a href="about.html" class="dropdown-item">About Us</a>
+                        <a href="faq.html" class="dropdown-item">FAQ</a>
+                        <a href="support.html" class="dropdown-item">Support</a>
+                        <a href="refund-policy.html" class="dropdown-item">Refund Policy</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu">
+        <div class="mobile-nav-header">
+            <h3>Menu</h3>
+            <button class="mobile-nav-close" title="Close mobile menu" aria-label="Close mobile menu"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="mobile-nav-list">
+            <li class="mobile-nav-item">
+                <a href="../index.html" class="mobile-nav-link">Home</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="articles.html" class="mobile-nav-link">Articles</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="cv-resume.html" class="mobile-nav-link">CV/Resume</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="order-track.html" class="mobile-nav-link">Order Track</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="e-products.html" class="mobile-nav-link">E-Products</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link">About Us</a>
+                <ul class="mobile-dropdown">
+                    <li><a href="about.html" class="mobile-dropdown-item">About Us</a></li>
+                    <li><a href="faq.html" class="mobile-dropdown-item">FAQ</a></li>
+                    <li><a href="support.html" class="mobile-dropdown-item">Support</a></li>
+                    <li><a href="refund-policy.html" class="mobile-dropdown-item">Refund Policy</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="page-title">All Articles</h1>
+        
+        <!-- Category Filter Dropdown -->
+        <div class="category-filter-container">
+            <div class="category-dropdown" id="categoryDropdown">
+                <button class="category-dropdown-btn" id="categoryDropdownBtn" aria-expanded="false" aria-haspopup="true">
+                    <span id="selectedCategory">All Categories</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="category-dropdown-menu" id="categoryDropdownMenu" role="menu">
+                    <div class="category-option active" data-category="all" role="menuitem">
+                        <span class="category-color-indicator category-all"></span>
+                        <span>All Categories</span>
+                    </div>
+                    <div class="category-option" data-category="news" role="menuitem">
+                        <span class="category-color-indicator category-news"></span>
+                        <span>News</span>
+                    </div>
+                    <div class="category-option" data-category="tutorial" role="menuitem">
+                        <span class="category-color-indicator category-tutorial"></span>
+                        <span>Tutorial</span>
+                    </div>
+                    <div class="category-option" data-category="update" role="menuitem">
+                        <span class="category-color-indicator category-update"></span>
+                        <span>Updates</span>
+                    </div>
+                    <div class="category-option" data-category="promotion" role="menuitem">
+                        <span class="category-color-indicator category-promotion"></span>
+                        <span>Promotions</span>
+                    </div>
+                    <div class="category-option" data-category="sports" role="menuitem">
+                        <span class="category-color-indicator category-sports"></span>
+                        <span>Sports</span>
+                    </div>
+                    <div class="category-option" data-category="celebrity" role="menuitem">
+                        <span class="category-color-indicator category-celebrity"></span>
+                        <span>Celebrity</span>
+                    </div>
+                    <div class="category-option" data-category="entertainment" role="menuitem">
+                        <span class="category-color-indicator category-entertainment"></span>
+                        <span>Entertainment</span>
+                    </div>
+                    <div class="category-option" data-category="movie" role="menuitem">
+                        <span class="category-color-indicator category-movie"></span>
+                        <span>Movies</span>
+                    </div>
+                    <div class="category-option" data-category="mobile" role="menuitem">
+                        <span class="category-color-indicator category-mobile"></span>
+                        <span>Mobile</span>
+                    </div>
+                    <div class="category-option" data-category="electronics" role="menuitem">
+                        <span class="category-color-indicator category-electronics"></span>
+                        <span>Electronics</span>
+                    </div>
+                    <div class="category-option" data-category="technology" role="menuitem">
+                        <span class="category-color-indicator category-technology"></span>
+                        <span>Technology</span>
+                    </div>
+                    <div class="category-option" data-category="health" role="menuitem">
+                        <span class="category-color-indicator category-health"></span>
+                        <span>Health</span>
+                    </div>
+                    <div class="category-option" data-category="travel" role="menuitem">
+                        <span class="category-color-indicator category-travel"></span>
+                        <span>Travel</span>
+                    </div>
+                    <div class="category-option" data-category="food" role="menuitem">
+                        <span class="category-color-indicator category-food"></span>
+                        <span>Food</span>
+                    </div>
+                    <div class="category-option" data-category="fashion" role="menuitem">
+                        <span class="category-color-indicator category-fashion"></span>
+                        <span>Fashion</span>
+                    </div>
+                    <div class="category-option" data-category="business" role="menuitem">
+                        <span class="category-color-indicator category-business"></span>
+                        <span>Business</span>
+                    </div>
+                    <div class="category-option" data-category="games" role="menuitem">
+                        <span class="category-color-indicator category-games"></span>
+                        <span>Games</span>
+                    </div>
+                    <div class="category-option" data-category="islamic" role="menuitem">
+                        <span class="category-color-indicator category-islamic"></span>
+                        <span>Islamic</span>
+                    </div>
+                    <div class="category-option" data-category="motivation" role="menuitem">
+                        <span class="category-color-indicator category-motivation"></span>
+                        <span>Motivation</span>
+                    </div>
+                </div>
+        <div class="loading" id="loadingSpinner">
+            <div class="spinner"></div>
+        </div>
+        <!-- Loading Spinner -->
+        <div class="loading" id="loadingSpinner">
+            <div class="spinner"></div>
+        </div>
+        
+        <!-- Articles Grid -->
+        <div class="articles-grid" id="articlesGrid">
+            <!-- Articles will be loaded here -->
+        </div>
+        
+        <div class="no-articles" id="noArticles">
+            <i class="fas fa-newspaper"></i>
+            <h3>No Articles Found</h3>
+            <p>We couldn't find any articles matching your selected category.</p>
+            <button class="btn-primary" onclick="resetFilter()">View All Articles</button>
+        </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <!-- Pagination will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About IlhamStore</h3>
+                    <p>Your one-stop shop for digital products, apps, games, and gift cards.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="articles.html">Articles</a></li>
+                        <li><a href="cv-resume.html">CV/Resume</a></li>
+                        <li><a href="order-track.html">Order Track</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="refund-policy.html">Refund Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Tiktok</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Donation Info Box -->
+            <div class="donation-info">
+                <div class="donation-stats">
+                    <h3>Our Charity Impact</h3>
+                    <div class="donation-row">
+                        <span class="donation-label">This month we fund:</span>
+                        <span class="donation-value" id="currentDonation">৳15,000</span>
+                    </div>
+                    <div class="donation-row">
+                        <span class="donation-label">Last month we donated:</span>
+                        <div class="charity-details">
+                            <span class="charity-name">Charity Foundation</span>
+                            <span class="charity-amount">৳12,500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 IlhamStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+    <script>
+        // Articles Management
+        let articles = [];
+        let filteredArticles = [];
+        let currentPage = 1;
+        const articlesPerPage = 12;
+        let currentCategory = 'all';
+        
+        // DOM Elements
+        const articlesGrid = document.getElementById('articlesGrid');
+        const pagination = document.getElementById('pagination');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const noArticles = document.getElementById('noArticles');
+        const categoryDropdown = document.getElementById('categoryDropdown');
+        const categoryDropdownBtn = document.getElementById('categoryDropdownBtn');
+        const categoryDropdownMenu = document.getElementById('categoryDropdownMenu');
+        const selectedCategory = document.getElementById('selectedCategory');
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadArticles();
+            setupCategoryDropdown();
+            setupSearch();
+        });
+        
+        // Setup category dropdown
+        function setupCategoryDropdown() {
+            // Toggle dropdown menu
+            categoryDropdownBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isOpen = categoryDropdown.classList.contains('active');
+                categoryDropdown.classList.toggle('active');
+                categoryDropdownBtn.setAttribute('aria-expanded', !isOpen);
+            });
+            
+            // Handle category selection
+            const categoryOptions = document.querySelectorAll('.category-option');
+            categoryOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Update selected category
+                    const category = this.getAttribute('data-category');
+                    const categoryName = this.querySelector('span:last-child').textContent;
+                    
+                    // Update dropdown button text
+                    selectedCategory.textContent = categoryName;
+                    
+                    // Update active state
+                    categoryOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Close dropdown
+                    categoryDropdown.classList.remove('active');
+                    categoryDropdownBtn.setAttribute('aria-expanded', 'false');
+                    
+                    // Filter articles
+                    currentCategory = category;
+                    filterArticles();
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!categoryDropdown.contains(event.target)) {
+                    categoryDropdown.classList.remove('active');
+                    categoryDropdownBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Handle keyboard navigation
+            categoryDropdownBtn.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    categoryDropdownBtn.click();
+                }
+            });
+        }
+        
+        // Load articles from localStorage or API
+        function loadArticles() {
+            showLoading();
+            
+            // In a real application, you would fetch from an API
+            // For GitHub Pages compatibility, we'll use localStorage
+            setTimeout(() => {
+                const savedArticles = localStorage.getItem('articles');
+                if (savedArticles) {
+                    articles = JSON.parse(savedArticles);
+                } else {
+                    // Default articles if none exist
+                    articles = [
+                        {
+                            id: 1,
+                            title: "Welcome to IlhamStore",
+                            category: "news",
+                            excerpt: "We're excited to announce the launch of our new store with amazing products and services.",
+                            content: "<p>Welcome to IlhamStore! We're thrilled to have you here. Our store offers a wide range of digital products and services to meet your needs.</p><p>From mobile game top-ups to digital subscriptions, we've got everything you need in one convenient place.</p>",
+                            image: "https://picsum.photos/seed/article1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 2,
+                            title: "How to Top-Up Your Mobile Game",
+                            category: "tutorial",
+                            excerpt: "Learn how to easily top-up your favorite mobile games with our simple step-by-step guide.",
+                            content: "<p>Top-up your mobile game credits in just a few simple steps:</p><ol><li>Select your game from our products page</li><li>Choose the amount you want to purchase</li><li>Complete the payment process</li><li>Receive your credits instantly</li></ol>",
+                            image: "https://picsum.photos/seed/article2/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 3,
+                            title: "Latest Sports Updates",
+                            category: "sports",
+                            excerpt: "Get the latest updates from the world of sports, including football, cricket, and more.",
+                            content: "<p>Sports fans rejoice! We bring you the latest updates from all major sporting events around the world.</p>",
+                            image: "https://picsum.photos/seed/sports1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 4,
+                            title: "Celebrity News and Gossip",
+                            category: "celebrity",
+                            excerpt: "Stay updated with the latest celebrity news, gossip, and exclusive interviews.",
+                            content: "<p>Your one-stop destination for all things celebrity. From Hollywood to Bollywood, we've got you covered.</p>",
+                            image: "https://picsum.photos/seed/celebrity1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 5,
+                            title: "Entertainment Industry Updates",
+                            category: "entertainment",
+                            excerpt: "Discover the latest happenings in the entertainment industry, from movies to music.",
+                            content: "<p>The entertainment world is constantly evolving. Stay tuned for the latest news and updates.</p>",
+                            image: "https://picsum.photos/seed/entertainment1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 6,
+                            title: "Movie Reviews and Previews",
+                            category: "movie",
+                            excerpt: "Check out our latest movie reviews and previews for upcoming blockbusters.",
+                            content: "<p>From Hollywood blockbusters to indie gems, we review all kinds of movies for your viewing pleasure.</p>",
+                            image: "https://picsum.photos/seed/movie1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 7,
+                            title: "Latest Mobile Phone Releases",
+                            category: "mobile",
+                            excerpt: "Stay updated with the latest mobile phone releases and reviews.",
+                            content: "<p>The mobile phone industry is constantly evolving. Check out the latest releases and our expert reviews.</p>",
+                            image: "https://picsum.photos/seed/mobile1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 8,
+                            title: "Electronics Buying Guide",
+                            category: "electronics",
+                            excerpt: "Your comprehensive guide to buying the best electronics for your needs.",
+                            content: "<p>From TVs to laptops, our buying guides help you make informed decisions about your electronics purchases.</p>",
+                            image: "https://picsum.photos/seed/electronics1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 9,
+                            title: "Technology News and Innovations",
+                            category: "technology",
+                            excerpt: "Stay updated with the latest technology news and innovations from around the world.",
+                            content: "<p>The tech world moves fast. We bring you the latest news and innovations to keep you informed.</p>",
+                            image: "https://picsum.photos/seed/technology1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 10,
+                            title: "Health and Wellness Tips",
+                            category: "health",
+                            excerpt: "Discover tips and advice for maintaining a healthy lifestyle.",
+                            content: "<p>Your health is your wealth. Discover our tips and advice for maintaining a healthy lifestyle.</p>",
+                            image: "https://picsum.photos/seed/health1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 11,
+                            title: "Travel Destinations and Guides",
+                            category: "travel",
+                            excerpt: "Explore amazing travel destinations with our comprehensive travel guides.",
+                            content: "<p>From exotic beaches to bustling cities, explore the world with our travel guides and tips.</p>",
+                            image: "https://picsum.photos/seed/travel1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 12,
+                            title: "Food and Recipes",
+                            category: "food",
+                            excerpt: "Discover delicious recipes and food tips from around the world.",
+                            content: "<p>Food brings people together. Discover our collection of delicious recipes and culinary tips.</p>",
+                            image: "https://picsum.photos/seed/food1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 13,
+                            title: "Fashion Trends and Tips",
+                            category: "fashion",
+                            excerpt: "Stay stylish with the latest fashion trends and style tips.",
+                            content: "<p>Fashion is a form of self-expression. Stay updated with the latest trends and style tips.</p>",
+                            image: "https://picsum.photos/seed/fashion1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 14,
+                            title: "Business and Finance News",
+                            category: "business",
+                            excerpt: "Get the latest business and finance news to stay informed.",
+                            content: "<p>The business world is complex. We break it down for you with the latest news and analysis.</p>",
+                            image: "https://picsum.photos/seed/business1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 15,
+                            title: "Special Promotions and Offers",
+                            category: "promotion",
+                            excerpt: "Check out our latest promotions and special offers.",
+                            content: "<p>Save big with our latest promotions and special offers. Don't miss out on these amazing deals!</p>",
+                            image: "https://picsum.photos/seed/promotion1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 16,
+                            title: "Latest Game Reviews",
+                            category: "games",
+                            excerpt: "Read our expert reviews of the latest games across all platforms.",
+                            content: "<p>From AAA titles to indie gems, our reviews help you decide which games are worth your time and money.</p>",
+                            image: "https://picsum.photos/seed/games1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 17,
+                            title: "Islamic Teachings and Wisdom",
+                            category: "islamic",
+                            excerpt: "Discover the beauty and wisdom of Islamic teachings in our articles.",
+                            content: "<p>Explore the rich heritage and profound wisdom of Islamic teachings in our comprehensive articles.</p>",
+                            image: "https://picsum.photos/seed/islamic1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        },
+                        {
+                            id: 18,
+                            title: "Daily Motivation and Inspiration",
+                            category: "motivation",
+                            excerpt: "Get your daily dose of motivation and inspiration to achieve your goals.",
+                            content: "<p>Start your day right with our motivational articles designed to inspire and empower you.</p>",
+                            image: "https://picsum.photos/seed/motivation1/400/250.jpg",
+                            status: "published",
+                            date: new Date().toISOString()
+                        }
+                    ];
+                }
+                
+                filterArticles();
+                hideLoading();
+            }, 500);
+        }
+        
+        // Filter articles by category
+        function filterArticles() {
+            showLoading();
+            
+            setTimeout(() => {
+                if (currentCategory === 'all') {
+                    filteredArticles = [...articles];
+                } else {
+                    filteredArticles = articles.filter(article => article.category === currentCategory);
+                }
+                
+                currentPage = 1;
+                renderArticles();
+                renderPagination();
+                hideLoading();
+                
+                // Show/hide no articles message
+                if (filteredArticles.length === 0) {
+                    articlesGrid.style.display = 'none';
+                    pagination.style.display = 'none';
+                    noArticles.style.display = 'block';
+                } else {
+                    articlesGrid.style.display = 'grid';
+                    pagination.style.display = 'flex';
+                    noArticles.style.display = 'none';
+                }
+            }, 300);
+        }
+        
+        // Render articles
+        function renderArticles() {
+            articlesGrid.innerHTML = '';
+            
+            const startIndex = (currentPage - 1) * articlesPerPage;
+            const endIndex = startIndex + articlesPerPage;
+            const paginatedArticles = filteredArticles.slice(startIndex, endIndex);
+            
+            paginatedArticles.forEach(article => {
+                const articleCard = document.createElement('div');
+                articleCard.className = 'article-card';
+                
+                // Set category class for styling
+                const categoryClass = `category-${article.category}`;
+                
+                articleCard.innerHTML = `
+                    <div class="article-img">
+                        <img src="${article.image || 'https://picsum.photos/seed/article' + article.id + '/400/250.jpg'}" alt="${article.title}">
+                    </div>
+                    <div class="article-info">
+                        <span class="article-category ${categoryClass}">
+                            <i class="fas fa-tag"></i>
+                            ${article.category.charAt(0).toUpperCase() + article.category.slice(1)}
+                        </span>
+                        <h3 class="article-title">${article.title}</h3>
+                        <p class="article-excerpt">${article.excerpt}</p>
+                        <div class="article-meta">
+                            <span>${new Date(article.date).toLocaleDateString()}</span>
+                        </div>
+                        <a href="page/article-view.html?id=${article.id}" class="read-more">Read More</a>
+                    </div>
+                `;
+                
+                articlesGrid.appendChild(articleCard);
+            });
+        }
+        
+        // Render pagination
+        function renderPagination() {
+            pagination.innerHTML = '';
+            
+            const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
+            
+            if (totalPages <= 1) return;
+            
+            // Previous button
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'pagination-btn';
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderArticles();
+                    renderPagination();
+                    scrollToTop();
+                }
+            });
+            pagination.appendChild(prevBtn);
+            
+            // Page numbers
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = 'pagination-btn';
+                pageBtn.textContent = i;
+                pageBtn.classList.toggle('active', i === currentPage);
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    renderArticles();
+                    renderPagination();
+                    scrollToTop();
+                });
+                pagination.appendChild(pageBtn);
+            }
+            
+            // Next button
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'pagination-btn';
+            nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderArticles();
+                    renderPagination();
+                    scrollToTop();
+                }
+            });
+            pagination.appendChild(nextBtn);
+            
+            // Page info
+            const pageInfo = document.createElement('div');
+            pageInfo.className = 'pagination-info';
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages} (${filteredArticles.length} articles)`;
+            pagination.appendChild(pageInfo);
+        }
+        
+        // Scroll to top of articles grid
+        function scrollToTop() {
+            articlesGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // Reset filter
+        function resetFilter() {
+            currentCategory = 'all';
+            selectedCategory.textContent = 'All Categories';
+            
+            // Update active button
+            const categoryOptions = document.querySelectorAll('.category-option');
+            categoryOptions.forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-category') === 'all') {
+                    option.classList.add('active');
+                }
+            });
+            
+            filterArticles();
+        }
+        
+        // Setup search functionality
+        function setupSearch() {
+            const searchBox = document.querySelector('.search-box');
+            const clearBtn = document.querySelector('.clear-btn');
+            const searchResults = document.querySelector('.search-results');
+            
+            // Sample data for search
+            const searchData = [
+                { title: 'Free Fire Diamonds', url: 'games/freefire.html' },
+                { title: 'Bigo Live Diamonds', url: 'apps/bigo.html' },
+                { title: 'CV Templates', url: 'cv-resume.html' },
+                { title: 'PlayStation Gift Card', url: 'gifts/psn.html' },
+                { title: 'Mobile Legends', url: 'games/mobilelegends.html' },
+                { title: 'Tango Coins', url: 'apps/tango.html' },
+                { title: 'Spotify Gift Card', url: 'gifts/spotify.html' },
+                { title: 'Articles', url: 'articles.html' }
+            ];
+            
+            if (searchBox) {
+                searchBox.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    
+                    if (searchTerm.length > 0) {
+                        clearBtn.style.display = 'block';
+                        
+                        // Filter search results
+                        const filteredResults = searchData.filter(item => 
+                            item.title.toLowerCase().includes(searchTerm)
+                        );
+                        
+                        // Display search results
+                        if (filteredResults.length > 0) {
+                            searchResults.innerHTML = filteredResults.map(item => 
+                                `<a href="${item.url}" class="search-result-item">${item.title}</a>`
+                            ).join('');
+                            searchResults.style.display = 'block';
+                        } else {
+                            searchResults.innerHTML = `<div class="search-result-item">No results found</div>`;
+                            searchResults.style.display = 'block';
+                        }
+                    } else {
+                        clearBtn.style.display = 'none';
+                        searchResults.style.display = 'none';
+                    }
+                });
+                
+                // Clear search
+                if (clearBtn) {
+                    clearBtn.addEventListener('click', function() {
+                        searchBox.value = '';
+                        clearBtn.style.display = 'none';
+                        searchResults.style.display = 'none';
+                        searchBox.focus();
+                    });
+                }
+                
+                // Hide search results when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!searchBox.contains(event.target) && !searchResults.contains(event.target)) {
+                        searchResults.style.display = 'none';
+                    }
+                });
+            }
+        }
+        
+        // Loading functions
+        function showLoading() {
+            loadingSpinner.style.display = 'flex';
+            articlesGrid.style.display = 'none';
+            pagination.style.display = 'none';
+            noArticles.style.display = 'none';
+        }
+        
+        function hideLoading() {
+            loadingSpinner.style.display = 'none';
+        }
+        
+        // Function to save articles to localStorage (for admin dashboard)
+        function saveArticles(newArticles) {
+            articles = newArticles;
+            localStorage.setItem('articles', JSON.stringify(articles));
+            filterArticles();
+        }
+        
+        // Function to add a new article (for admin dashboard)
+        function addArticle(newArticle) {
+            newArticle.id = articles.length > 0 ? Math.max(...articles.map(a => a.id)) + 1 : 1;
+            newArticle.date = new Date().toISOString();
+            articles.push(newArticle);
+            saveArticles(articles);
+        }
+        
+        // Function to update an article (for admin dashboard)
+        function updateArticle(id, updatedArticle) {
+            const index = articles.findIndex(article => article.id === parseInt(id));
+            if (index !== -1) {
+                articles[index] = { ...articles[index], ...updatedArticle };
+                saveArticles(articles);
+            }
+        }
+        
+        // Function to delete an article (for admin dashboard)
+        function deleteArticle(id) {
+            articles = articles.filter(article => article.id !== parseInt(id));
+            saveArticles(articles);
+        }
+        
+        // Make functions globally accessible for admin dashboard
+        window.articleManager = {
+            saveArticles,
+            addArticle,
+            updateArticle,
+            deleteArticle
+        };
+    </script>
+</body>
+</html>

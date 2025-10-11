@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Track - IlhamStore</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Import variables from main stylesheet */
+        :root {
+            --white: #ffffff;
+            --light-gray: #bfbfbf;
+            --medium-gray: #7f7f7f;
+            --dark-gray: #404040;
+            --black: #000000;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--dark-gray) 0%, var(--medium-gray) 100%);
+            --gradient-light: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--medium-gray) 0%, var(--dark-gray) 100%);
+            
+            /* Red and Black Gradient for Contact */
+            --gradient-contact: linear-gradient(135deg, #ff0000 0%, #000000 100%);
+            
+            /* Red and Black Gradient for Logo */
+            --gradient-logo: linear-gradient(135deg, #ff0000 0%, #000000 100%);
+            
+            /* Notification colors */
+            --success-color: #4CAF50;
+            --error-color: #F44336;
+            --warning-color: #FF9800;
+            --info-color: #2196F3;
+        }
+        
+        /* Order Track Section */
+        .order-track-container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .order-track-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .order-track-header h2 {
+            font-size: 28px;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .order-track-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--gradient-contact);
+        }
+        
+        .order-track-header p {
+            color: var(--medium-gray);
+        }
+        
+        .order-form {
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: var(--white);
+        }
+        
+        .form-group input:focus {
+            border-color: var(--dark-gray);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .track-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: var(--gradient-contact);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .track-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .track-btn:focus {
+            outline: 2px solid var(--dark-gray);
+            outline-offset: 2px;
+        }
+        
+        .track-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .track-btn.loading {
+            color: transparent;
+        }
+        
+        .track-btn.loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spinner 0.8s linear infinite;
+        }
+        
+        .order-result {
+            display: none;
+            margin-top: 30px;
+            animation: slideIn 0.5s ease;
+        }
+        
+        .order-result.show {
+            display: block;
+        }
+        
+        .order-info {
+            margin-bottom: 20px;
+        }
+        
+        .order-info h3 {
+            font-size: 20px;
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .order-info h3 i {
+            margin-right: 10px;
+            color: var(--success-color);
+        }
+        
+        .order-details {
+            background-color: var(--gradient-light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .order-details p {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .order-details p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .order-details span {
+            font-weight: 500;
+        }
+        
+        .order-status {
+            margin-top: 20px;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-contact);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+        
+        .status-timeline {
+            position: relative;
+            margin-top: 30px;
+            padding-left: 30px;
+        }
+        
+        .status-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10px;
+            height: 100%;
+            width: 2px;
+            background-color: var(--light-gray);
+        }
+        
+        .status-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .status-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .status-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -30px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .status-item.completed::before {
+            background-color: var(--success-color);
+        }
+        
+        .status-item.active::before {
+            background-color: #ff0000;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .status-content {
+            padding-left: 10px;
+            background-color: var(--white);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .status-item:hover .status-content {
+            transform: translateX(5px);
+        }
+        
+        .status-content h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-content h4 i {
+            margin-right: 8px;
+            color: #ff0000;
+        }
+        
+        .status-content p {
+            font-size: 14px;
+            color: var(--medium-gray);
+        }
+        
+        .product-info {
+            display: flex;
+            align-items: center;
+            background-color: var(--gradient-light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-details h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .product-details p {
+            font-size: 14px;
+            color: var(--medium-gray);
+            margin-bottom: 5px;
+        }
+        
+        .product-details .price {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ff0000;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--white);
+            background: var(--gradient-contact);
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .order-summary {
+            background-color: var(--gradient-light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .order-summary h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .order-summary h4 i {
+            margin-right: 8px;
+            color: var(--dark-gray);
+        }
+        
+        .order-summary p {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .order-summary .total {
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--medium-gray);
+        }
+        
+        .no-orders {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--medium-gray);
+        }
+        
+        .no-orders i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--light-gray);
+        }
+        
+        .no-orders h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--dark-gray);
+        }
+        
+        .no-orders p {
+            margin-bottom: 20px;
+        }
+        
+        .no-orders a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--gradient-contact);
+            color: var(--white);
+            border-radius: 4px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .no-orders a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Notification Container */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .notification {
+            padding: 15px 20px;
+            border-radius: 4px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background-color: var(--success-color);
+        }
+        
+        .notification.error {
+            background-color: var(--error-color);
+        }
+        
+        .notification.warning {
+            background-color: var(--warning-color);
+        }
+        
+        .notification.info {
+            background-color: var(--info-color);
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+        
+        @media (max-width: 768px) {
+            .order-track-container {
+                margin: 30px 15px;
+                padding: 20px;
+            }
+            
+            .order-track-header h2 {
+                font-size: 24px;
+            }
+            
+            .status-timeline {
+                padding-left: 20px;
+            }
+            
+            .status-item::before {
+                left: -20px;
+            }
+            
+            .product-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .product-image {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo-container">
+                    <img src="https://picsum.photos/seed/logo/40/40.jpg" alt="IlhamStore Logo" class="logo">
+                    <div class="logo-text">
+                        <a href="../index.html" class="logo-name">IlhamStore</a>
+                        <div class="tagline">👉 Click. Buy. Care.</div>
+                    </div>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" class="search-box" placeholder="Search products..." aria-label="Search products">
+                    <button class="clear-btn" title="Clear search" aria-label="Clear search"><i class="fas fa-times"></i></button>
+                    <button class="search-btn" title="Search" aria-label="Search"><i class="fas fa-search"></i></button>
+                    <div class="search-results" role="region" aria-live="polite"></div>
+                </div>
+                
+                <a href="../user/login.html" class="account-btn" id="accountBtn" aria-label="Account">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="accountText">Account</span>
+                </a>
+                
+                <button class="mobile-menu-btn" title="Open mobile menu" aria-label="Open mobile menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Section -->
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="articles.html" class="nav-link">Articles</a>
+                </li>
+                <li class="nav-item">
+                    <a href="cv-resume.html" class="nav-link">CV/Resume</a>
+                </li>
+                <li class="nav-item">
+                    <a href="order-track.html" class="nav-link">Order Track</a>
+                </li>
+                <li class="nav-item">
+                    <a href="e-products.html" class="nav-link">E-Products</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">About Us <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <a href="about.html" class="dropdown-item">About Us</a>
+                        <a href="faq.html" class="dropdown-item">FAQ</a>
+                        <a href="support.html" class="dropdown-item">Support</a>
+                        <a href="refund-policy.html" class="dropdown-item">Refund Policy</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu">
+        <div class="mobile-nav-header">
+            <h3>Menu</h3>
+            <button class="mobile-nav-close" title="Close mobile menu" aria-label="Close mobile menu"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="mobile-nav-list">
+            <li class="mobile-nav-item">
+                <a href="../index.html" class="mobile-nav-link">Home</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="articles.html" class="mobile-nav-link">Articles</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="cv-resume.html" class="mobile-nav-link">CV/Resume</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="order-track.html" class="mobile-nav-link">Order Track</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="e-products.html" class="mobile-nav-link">E-Products</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link">About Us</a>
+                <ul class="mobile-dropdown">
+                    <li><a href="about.html" class="mobile-dropdown-item">About Us</a></li>
+                    <li><a href="faq.html" class="mobile-dropdown-item">FAQ</a></li>
+                    <li><a href="support.html" class="mobile-dropdown-item">Support</a></li>
+                    <li><a href="refund-policy.html" class="mobile-dropdown-item">Refund Policy</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Order Track Section -->
+    <section class="order-track-section">
+        <div class="container">
+            <a href="../index.html" class="back-btn" aria-label="Back to home">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            
+            <div class="order-track-container">
+                <div class="order-track-header">
+                    <h2>Track Your Order</h2>
+                    <p>Enter your order number to check the status of your order</p>
+                </div>
+                
+                <div class="order-form">
+                    <div class="form-group">
+                        <label for="orderNumber">Order Number</label>
+                        <input type="text" id="orderNumber" placeholder="Enter your order number (e.g., #12345)" aria-label="Order number">
+                        <div class="error-message" id="errorMessage">Please enter a valid order number</div>
+                    </div>
+                    <button class="track-btn" id="trackOrderBtn">Track Order</button>
+                </div>
+                
+                <div class="order-result" id="orderResult">
+                    <!-- Order details will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About IlhamStore</h3>
+                    <p>Your one-stop shop for digital products, apps, games, and gift cards.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="articles.html">Articles</a></li>
+                        <li><a href="cv-resume.html">CV/Resume</a></li>
+                        <li><a href="order-track.html">Order Track</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="refund-policy.html">Refund Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Tiktok</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Donation Info Box -->
+            <div class="donation-info">
+                <div class="donation-stats">
+                    <h3>Our Charity Impact</h3>
+                    <div class="donation-container">
+                        <div class="donation-row">
+                            <span class="donation-label">This month we fund:</span>
+                            <span class="donation-value" id="currentDonation">৳15,000</span>
+                        </div>
+                        <div class="donation-row">
+                            <span class="donation-label">Last month we donated:</span>
+                            <div class="charity-details">
+                                <span class="charity-name">Charity Foundation</span>
+                                <span class="charity-amount">৳12,500</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 IlhamStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Live Chat Button -->
+    <div class="live-chat" id="chatButton" aria-label="Contact us">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+
+    <!-- Contact Popup -->
+    <div class="contact-popup" id="contactPopup">
+        <div class="contact-popup-content">
+            <span class="close-popup" id="closeContactPopup" aria-label="Close contact popup">&times;</span>
+            <h3>Contact Us</h3>
+            <div class="contact-options">
+                <a href="tel:+1234567890" class="contact-option">
+                    <i class="fas fa-phone"></i>
+                    <span>Phone</span>
+                </a>
+                <a href="https://t.me/yourtelegram" class="contact-option" target="_blank" rel="noopener">
+                    <i class="fab fa-telegram-plane"></i>
+                    <span>Telegram</span>
+                </a>
+                <a href="https://m.me/yourmessenger" class="contact-option" target="_blank" rel="noopener">
+                    <i class="fab fa-facebook-messenger"></i>
+                    <span>Messenger</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script src="../assets/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize sample orders if they don't exist
+            initializeSampleOrders();
+            
+            // Track Order Button
+            const trackOrderBtn = document.getElementById('trackOrderBtn');
+            const orderResult = document.getElementById('orderResult');
+            const orderNumberInput = document.getElementById('orderNumber');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            trackOrderBtn.addEventListener('click', function() {
+                const orderNumber = orderNumberInput.value.trim();
+                
+                // Reset previous states
+                errorMessage.classList.remove('show');
+                orderNumberInput.style.borderColor = 'var(--light-gray)';
+                orderResult.classList.remove('show');
+                
+                if (orderNumber === '') {
+                    // Show error message
+                    errorMessage.classList.add('show');
+                    orderNumberInput.style.borderColor = 'var(--error-color)';
+                    return;
+                }
+                
+                // Show loading state
+                trackOrderBtn.classList.add('loading');
+                trackOrderBtn.disabled = true;
+                
+                // Simulate API call
+                setTimeout(() => {
+                    // Get order from localStorage
+                    const order = getOrder(orderNumber);
+                    
+                    if (order) {
+                        // Display order details
+                        displayOrderDetails(order);
+                        showNotification('Order found successfully!', 'success');
+                    } else {
+                        // Show no orders message
+                        displayNoOrdersMessage(orderNumber);
+                        showNotification('Order not found. Please check your order number.', 'error');
+                    }
+                    
+                    // Reset button
+                    trackOrderBtn.classList.remove('loading');
+                    trackOrderBtn.disabled = false;
+                }, 1500);
+            });
+            
+            // Clear error when user starts typing
+            orderNumberInput.addEventListener('input', function() {
+                errorMessage.classList.remove('show');
+                orderNumberInput.style.borderColor = 'var(--light-gray)';
+            });
+            
+            // Initialize sample orders
+            function initializeSampleOrders() {
+                // Check if orders already exist in localStorage
+                if (!localStorage.getItem('orders')) {
+                    // Create sample orders
+                    const sampleOrders = [
+                        {
+                            id: '#12345',
+                            date: '2025-07-31',
+                            paymentMethod: 'Mobile Banking',
+                            status: 'processing',
+                            product: {
+                                name: 'PUBG Mobile UC',
+                                description: '600 UC + 60 Bonus',
+                                price: '৳500',
+                                image: 'https://picsum.photos/seed/pubg/80/80.jpg'
+                            },
+                            statusHistory: [
+                                { status: 'Order Placed', date: '2025-07-31, 10:30 AM', completed: true },
+                                { status: 'Payment Confirmed', date: '2025-07-31, 10:35 AM', completed: true },
+                                { status: 'Processing', date: 'In progress', completed: false, active: true },
+                                { status: 'Completed', date: 'Pending', completed: false }
+                            ],
+                            subtotal: '৳500',
+                            discount: '৳0',
+                            total: '৳500'
+                        },
+                        {
+                            id: '#12346',
+                            date: '2025-07-30',
+                            paymentMethod: 'Bkash',
+                            status: 'completed',
+                            product: {
+                                name: 'Free Fire Diamonds',
+                                description: '310 Diamonds',
+                                price: '৳350',
+                                image: 'https://picsum.photos/seed/freefire/80/80.jpg'
+                            },
+                            statusHistory: [
+                                { status: 'Order Placed', date: '2025-07-30, 2:15 PM', completed: true },
+                                { status: 'Payment Confirmed', date: '2025-07-30, 2:20 PM', completed: true },
+                                { status: 'Processing', date: '2025-07-30, 2:25 PM', completed: true },
+                                { status: 'Completed', date: '2025-07-30, 3:00 PM', completed: true }
+                            ],
+                            subtotal: '৳350',
+                            discount: '৳0',
+                            total: '৳350'
+                        },
+                        {
+                            id: '#12347',
+                            date: '2025-07-29',
+                            paymentMethod: 'Nagad',
+                            status: 'order-placed',
+                            product: {
+                                name: 'Mobile Legends Diamonds',
+                                description: '142 Diamonds',
+                                price: '৳200',
+                                image: 'https://picsum.photos/seed/ml/80/80.jpg'
+                            },
+                            statusHistory: [
+                                { status: 'Order Placed', date: '2025-07-29, 11:45 AM', completed: true, active: true },
+                                { status: 'Payment Confirmed', date: 'Pending', completed: false },
+                                { status: 'Processing', date: 'Pending', completed: false },
+                                { status: 'Completed', date: 'Pending', completed: false }
+                            ],
+                            subtotal: '৳200',
+                            discount: '৳0',
+                            total: '৳200'
+                        }
+                    ];
+                    
+                    // Save to localStorage
+                    localStorage.setItem('orders', JSON.stringify(sampleOrders));
+                }
+            }
+            
+            // Get order from localStorage
+            function getOrder(orderNumber) {
+                const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+                return orders.find(order => order.id === '#' + orderNumber || order.id === orderNumber);
+            }
+            
+            // Display order details
+            function displayOrderDetails(order) {
+                // Calculate progress percentage based on completed status items
+                const completedItems = order.statusHistory.filter(item => item.completed).length;
+                const progressPercentage = (completedItems / order.statusHistory.length) * 100;
+                
+                // Create HTML for order details
+                const orderHTML = `
+                    <div class="order-info">
+                        <h3><i class="fas fa-check-circle"></i> Order Found</h3>
+                        <div class="order-details">
+                            <p>Order Number: <span>${order.id}</span></p>
+                            <p>Order Date: <span>${order.date}</span></p>
+                            <p>Payment Method: <span>${order.paymentMethod}</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <div class="product-image">
+                            <img src="${order.product.image}" alt="${order.product.name}">
+                        </div>
+                        <div class="product-details">
+                            <h4>${order.product.name}</h4>
+                            <p>${order.product.description}</p>
+                            <div class="price">${order.product.price}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="order-summary">
+                        <h4><i class="fas fa-receipt"></i> Order Summary</h4>
+                        <p>Subtotal: <span>${order.subtotal}</span></p>
+                        <p>Discount: <span>${order.discount}</span></p>
+                        <p class="total">Total: <span>${order.total}</span></p>
+                    </div>
+                    
+                    <div class="order-status">
+                        <h3>Order Status</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: ${progressPercentage}%"></div>
+                        </div>
+                        <div class="status-timeline">
+                            ${order.statusHistory.map((item, index) => `
+                                <div class="status-item ${item.completed ? 'completed' : ''} ${item.active ? 'active' : ''}">
+                                    <div class="status-content">
+                                        <h4><i class="fas fa-${getStatusIcon(item.status)}"></i> ${item.status}</h4>
+                                        <p>${item.date}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                // Update order result container
+                orderResult.innerHTML = orderHTML;
+                orderResult.classList.add('show');
+                
+                // Animate progress bar after a short delay
+                setTimeout(() => {
+                    const progressBar = document.querySelector('.progress-bar');
+                    if (progressBar) {
+                        progressBar.style.width = `${progressPercentage}%`;
+                    }
+                }, 300);
+            }
+            
+            // Display no orders message
+            function displayNoOrdersMessage(orderNumber) {
+                const noOrdersHTML = `
+                    <div class="no-orders">
+                        <i class="fas fa-search"></i>
+                        <h3>No Order Found</h3>
+                        <p>We couldn't find any order with the number <strong>#${orderNumber}</strong>.</p>
+                        <p>Please check your order number and try again.</p>
+                        <a href="../index.html">Continue Shopping</a>
+                    </div>
+                `;
+                
+                // Update order result container
+                orderResult.innerHTML = noOrdersHTML;
+                orderResult.classList.add('show');
+            }
+            
+            // Get status icon based on status name
+            function getStatusIcon(status) {
+                const statusIcons = {
+                    'Order Placed': 'shopping-cart',
+                    'Payment Confirmed': 'credit-card',
+                    'Processing': 'cogs',
+                    'Completed': 'check-circle'
+                };
+                
+                return statusIcons[status] || 'info-circle';
+            }
+            
+            // Notification function
+            function showNotification(message, type = 'info') {
+                const notificationContainer = document.getElementById('notificationContainer');
+                
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                
+                // Add to container
+                notificationContainer.appendChild(notification);
+                
+                // Trigger animation
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
