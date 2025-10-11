@@ -743,11 +743,12 @@ nav {
 }
 
 .cv-card h3 {
-    font-size: 14px;
-    font-weight: 500;
-    margin: 8px 12px;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 10px 12px 6px;
     line-height: 1.3;
     text-align: center;
+    color: var(--primary-color);
 }
 
 .cv-card p {
@@ -759,10 +760,10 @@ nav {
 }
 
 .cv-price {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin: 5px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666666;
+    margin: 5px 12px 10px;
     text-align: center;
 }
 
@@ -830,17 +831,18 @@ nav {
 }
 
 .product-title {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
     line-height: 1.3;
+    color: var(--primary-color);
 }
 
 .product-price {
     font-size: 14px;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 8px;
+    font-weight: 500;
+    color: #666666;
+    margin-bottom: 12px;
 }
 
 .buy-btn {
@@ -857,7 +859,7 @@ nav {
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     padding: 20px;
     border-radius: 12px;
@@ -1427,7 +1429,7 @@ footer {
     }
     
     .features-grid {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 15px;
     }
     
