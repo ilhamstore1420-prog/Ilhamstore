@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Template Bundle - IlhamStore</title>
+    <meta name="description" content="Get access to our premium collection of 15+ professional CV templates designed for various industries and career levels. Save money and time with this comprehensive package.">
+    <meta name="keywords" content="CV bundle, resume templates, professional CV, job application, career templates">
+    <meta name="author" content="IlhamStore">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="CV Template Bundle - IlhamStore">
+    <meta property="og:description" content="Get access to our premium collection of 15+ professional CV templates designed for various industries and career levels.">
+    <meta property="og:image" content="https://picsum.photos/seed/cv-bundle/1200/630.jpg">
+    <meta property="og:url" content="https://yourusername.github.io/yourrepo/pages/cvs/cv-template-bundle.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourusername.github.io/yourrepo/pages/cvs/cv-template-bundle.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "CV Template Bundle",
+      "description": "Get access to our premium collection of 15+ professional CV templates designed for various industries and career levels",
+      "url": "https://yourusername.github.io/yourrepo/pages/cvs/cv-template-bundle.html",
+      "image": "https://picsum.photos/seed/cv-bundle/1200/630.jpg",
+      "brand": {
+        "@type": "Brand",
+        "name": "IlhamStore"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "500",
+        "priceCurrency": "BDT",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "3"
+      }
+    }
+    </script>
+    
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        /* Additional styles specific to product page */
+        .product-page {
+            padding: 20px 0;
+        }
+        
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .product-image {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-image:hover img {
+            transform: scale(1.03);
+        }
+        
+        .tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+        }
+        
+        .tag.bundle {
+            background: #6f42c1;
+        }
+        
+        .product-details {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-title {
+            font-size: 28px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .product-price {
+            font-size: 24px;
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .product-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            margin-bottom: 30px;
+        }
+        
+        .bundle-features {
+            background: var(--gradient-light);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .bundle-features h3 {
+            font-size: 20px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .bundle-features h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient-logo);
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: var(--dark-gray);
+        }
+        
+        .feature-list li i {
+            color: var(--accent-color);
+            margin-right: 10px;
+        }
+        
+        .product-form {
+            background: var(--gradient-light);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--secondary-color);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: var(--white);
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(45, 95, 71, 0.2);
+        }
+        
+        .warning-note {
+            font-size: 14px;
+            color: var(--accent-color);
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .btn-buy {
+            background: var(--gradient-logo);
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            width: 100%;
+        }
+        
+        .btn-buy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .bundle-gallery {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient-logo);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: var(--white);
+            padding: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .how-to-buy {
+            margin-bottom: 40px;
+        }
+        
+        .how-to-intro {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            margin-bottom: 20px;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .reviews {
+            margin-bottom: 40px;
+        }
+        
+        .review-item {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .reviewer-info {
+            flex: 1;
+        }
+        
+        .reviewer-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .review-date {
+            font-size: 14px;
+            color: var(--medium-gray);
+        }
+        
+        .review-rating {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+        
+        .review-text {
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--dark-gray);
+        }
+        
+        .review-form-container {
+            background-color: var(--white);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .rating-input {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .rating-input label {
+            margin-right: 10px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .rating-stars {
+            display: flex;
+        }
+        
+        .rating-stars i {
+            font-size: 20px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+            margin-right: 5px;
+        }
+        
+        .rating-stars i:hover,
+        .rating-stars i.active {
+            color: #ffc107;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        
+        .btn-submit {
+            background: var(--gradient-logo);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-cancel {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--secondary-color);
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-right: 10px;
+        }
+        
+        .btn-cancel:hover {
+            background: var(--light-color);
+        }
+        
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .related-products {
+            margin-top: 40px;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .related-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            border: 1px solid var(--secondary-color);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .related-image {
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+        }
+        
+        .related-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .related-card:hover .related-image img {
+            transform: scale(1.05);
+        }
+        
+        .related-details {
+            padding: 15px;
+            margin-top: auto;
+        }
+        
+        .related-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        .related-price {
+            font-size: 14px;
+            color: var(--accent-color);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .related-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 15px 15px;
+        }
+        
+        .related-actions button, .related-actions a {
+            flex: 1;
+            margin: 0 3px;
+            text-align: center;
+            font-size: 12px;
+            padding: 6px 10px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .product-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .product-title {
+                font-size: 24px;
+            }
+            
+            .product-price {
+                font-size: 20px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .related-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo-container">
+                    <img src="https://picsum.photos/seed/logo/40/40.jpg" alt="IlhamStore Logo" class="logo">
+                    <div class="logo-text">
+                        <a href="../../index.html" class="logo-name">IlhamStore</a>
+                        <div class="tagline">👉 Click. Buy. Care.</div>
+                    </div>
+                </div>
+                
+                <div class="search-container">
+                    <form id="searchForm" role="search">
+                        <label for="searchInput" class="sr-only">Search products</label>
+                        <input type="text" id="searchInput" class="search-box" placeholder="Search products..." aria-label="Search products">
+                        <button type="button" class="clear-btn" title="Clear search" aria-label="Clear search"><i class="fas fa-times"></i></button>
+                        <button type="submit" class="search-btn" title="Search" aria-label="Search"><i class="fas fa-search"></i></button>
+                    </form>
+                    <div class="search-results" role="region" aria-live="polite"></div>
+                </div>
+                
+                <a href="../../user/login.html" class="account-btn" id="accountBtn" aria-label="Account">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="accountText">Account</span>
+                </a>
+                
+                <button class="mobile-menu-btn" title="Open mobile menu" aria-label="Open mobile menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        
+        <!-- Mobile Search Bar (Bottom of Header) -->
+        <div class="mobile-search-bar">
+            <form id="mobileSearchForm" role="search">
+                <label for="mobileSearchInput" class="sr-only">Search products</label>
+                <input type="text" id="mobileSearchInput" class="mobile-search-input" placeholder="Search for CV templates..." aria-label="Search products">
+                <button type="submit" class="mobile-search-submit" aria-label="Search"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="mobile-search-results" role="region" aria-live="polite"></div>
+        </div>
+    </header>
+    
+    <!-- Navigation Section -->
+    <nav role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../../index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../cv-resume.html" class="nav-link">CV/Resume</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../order-track.html" class="nav-link">Order Track</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../e-products.html" class="nav-link">E-Products</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">About Us <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <a href="about.html" class="dropdown-item">About Us</a>
+                        <a href="faq.html" class="dropdown-item">FAQ</a>
+                        <a href="support.html" class="dropdown-item">Support</a>
+                        <a href="refund-policy.html" class="dropdown-item">Refund Policy</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu" role="navigation" aria-label="Mobile navigation">
+        <div class="mobile-nav-header">
+            <h3>Menu</h3>
+            <button class="mobile-nav-close" title="Close mobile menu" aria-label="Close mobile menu"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="mobile-nav-list">
+            <li class="mobile-nav-item">
+                <a href="../../index.html" class="mobile-nav-link">Home</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="../cv-resume.html" class="mobile-nav-link">CV/Resume</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="../order-track.html" class="mobile-nav-link">Order Track</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="../e-products.html" class="mobile-nav-link">E-Products</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link">About Us</a>
+                <ul class="mobile-dropdown">
+                    <li><a href="about.html" class="mobile-dropdown-item">About Us</a></li>
+                    <li><a href="faq.html" class="mobile-dropdown-item">FAQ</a></li>
+                    <li><a href="support.html" class="mobile-dropdown-item">Support</a></li>
+                    <li><a href="refund-policy.html" class="mobile-dropdown-item">Refund Policy</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="container" id="main-content">
+        <!-- Product Page -->
+        <section class="product-page" id="product-container">
+            <div class="product-container">
+                <div class="product-image">
+                    <img src="../../assets/images/cv25.jpg" alt="CV Bundle">
+                    <span class="tag bundle">Bundle</span>
+                </div>
+                <div class="product-details">
+                    <h1 class="product-title">CV Template Bundle</h1>
+                    <div class="product-price">৳500</div>
+                    <p class="product-description">
+                        Get access to our premium collection of 15+ professional CV templates designed for various industries and career levels. This bundle includes templates for executives, creatives, technical professionals, and more. Save money and time with this comprehensive package.
+                    </p>
+                    
+                    <div class="bundle-features">
+                        <h3>What's Included</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> 15+ Professional CV Templates</li>
+                            <li><i class="fas fa-check-circle"></i> Templates for All Industries</li>
+                            <li><i class="fas fa-check-circle"></i> ATS-Friendly Formats</li>
+                            <li><i class="fas fa-check-circle"></i> Modern & Classic Designs</li>
+                            <li><i class="fas fa-check-circle"></i> Instant Download</li>
+                            <li><i class="fas fa-check-circle"></i> Lifetime Updates</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-form">
+                        <form id="productForm">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" class="form-control" placeholder="Enter your email address" required>
+                                <p class="warning-note">For product please put your email address carefully. You will receive files at your email. We are not responsible and will not refund for your fault.</p>
+                            </div>
+                            <button type="submit" class="btn-buy">Proceed to Checkout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bundle Gallery -->
+            <div class="bundle-gallery">
+                <h2 class="section-title">Preview Templates in Bundle</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="../../assets/images/cv1.jpg" alt="Professional CV" data-cv="../../assets/cvs/professional-cv.pdf">
+                        <div class="gallery-overlay">Professional CV</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../../assets/images/cv2.jpg" alt="Creative CV" data-cv="../../assets/cvs/creative-cv.pdf">
+                        <div class="gallery-overlay">Creative CV</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../../assets/images/cv3.jpg" alt="Academic CV" data-cv="../../assets/cvs/academic-cv.pdf">
+                        <div class="gallery-overlay">Academic CV</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../../assets/images/cv4.jpg" alt="Basic Resume" data-cv="../../assets/cvs/basic-resume.pdf">
+                        <div class="gallery-overlay">Basic Resume</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../../assets/images/cv5.jpg" alt="Modern Resume" data-cv="../../assets/cvs/modern-resume.pdf">
+                        <div class="gallery-overlay">Modern Resume</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../../assets/images/cv6.jpg" alt="Cover Letter" data-cv="../../assets/cvs/cover-letter.pdf">
+                        <div class="gallery-overlay">Cover Letter</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../../assets/images/cv7.jpg" alt="Student CV" data-cv="../../assets/cvs/student-cv.pdf">
+                        <div class="gallery-overlay">Student CV</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../../assets/images/cv8.jpg" alt="Creative Resume" data-cv="../../assets/cvs/creative-resume.pdf">
+                        <div class="gallery-overlay">Creative Resume</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../../assets/images/cv9.jpg" alt="Executive CV" data-cv="../../assets/cvs/executive-cv.pdf">
+                        <div class="gallery-overlay">Executive CV</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../../assets/images/cv10.jpg" alt="Technical CV" data-cv="../../assets/cvs/technical-cv.pdf">
+                        <div class="gallery-overlay">Technical CV</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../../assets/images/cv11.jpg" alt="Medical CV" data-cv="../../assets/cvs/medical-cv.pdf">
+                        <div class="gallery-overlay">Medical CV</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Buy Section -->
+            <div class="how-to-buy">
+                <h2 class="section-title">How to Buy</h2>
+                <p class="how-to-intro">
+                    Purchasing our CV Template Bundle is quick and easy. After completing your payment, you'll receive an email with a download link to access all the templates immediately. No editing services are included with this bundle - you get all the templates in their original format to customize as you wish.
+                </p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="How to buy CV bundle" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="reviews">
+                <h2 class="section-title">Customer Reviews</h2>
+                <div id="reviewsContainer">
+                    <!-- Reviews will be loaded here from Supabase -->
+                </div>
+            </div>
+
+            <!-- Review Form Section -->
+            <div class="review-form-container">
+                <h2 class="section-title">Write a Review</h2>
+                <div class="success-message" id="reviewSuccessMessage">
+                    Thank you for your review! It will be published after admin approval.
+                </div>
+                <div class="error-message" id="reviewErrorMessage">
+                    There was an error submitting your review. Please try again.
+                </div>
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label for="reviewerName">Your Name</label>
+                        <input type="text" id="reviewerName" class="form-control" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewerEmail">Email Address</label>
+                        <input type="email" id="reviewerEmail" class="form-control" placeholder="Enter your email address" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <div class="rating-input">
+                            <div class="rating-stars" id="ratingStars">
+                                <i class="far fa-star" data-rating="1"></i>
+                                <i class="far fa-star" data-rating="2"></i>
+                                <i class="far fa-star" data-rating="3"></i>
+                                <i class="far fa-star" data-rating="4"></i>
+                                <i class="far fa-star" data-rating="5"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewText">Your Review</label>
+                        <textarea id="reviewText" class="form-control" placeholder="Share your experience with this product" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" id="cancelReview">Cancel</button>
+                        <button type="submit" class="btn-submit" id="submitReviewBtn">Submit Review</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Related Products -->
+            <div class="related-products">
+                <h2 class="section-title">Related Products</h2>
+                <div class="related-grid">
+                    <div class="related-card">
+                        <div class="related-image">
+                            <img src="../../assets/images/cv26.jpg" alt="Resume Bundle" data-cv="../../assets/cvs/resume-bundle.pdf">
+                        </div>
+                        <div class="related-details">
+                            <h3 class="related-title">Resume Template Bundle</h3>
+                            <div class="related-price">৳400</div>
+                        </div>
+                        <div class="related-actions">
+                            <button class="btn-secondary preview-btn">Preview</button>
+                            <a href="resume-template-bundle.html" class="btn-primary">Buy Now</a>
+                        </div>
+                    </div>
+                    <div class="related-card">
+                        <div class="related-image">
+                            <img src="../../assets/images/cv27.jpg" alt="Cover Letter Bundle" data-cv="../../assets/cvs/cover-bundle.pdf">
+                        </div>
+                        <div class="related-details">
+                            <h3 class="related-title">Cover Letter Bundle</h3>
+                            <div class="related-price">৳300</div>
+                        </div>
+                        <div class="related-actions">
+                            <button class="btn-secondary preview-btn">Preview</button>
+                            <a href="cover-letter-bundle.html" class="btn-primary">Buy Now</a>
+                        </div>
+                    </div>
+                    <div class="related-card">
+                        <div class="related-image">
+                            <img src="../../assets/images/cv28.jpg" alt="Professional Bundle" data-cv="../../assets/cvs/professional-bundle.pdf">
+                        </div>
+                        <div class="related-details">
+                            <h3 class="related-title">Professional Bundle</h3>
+                            <div class="related-price">৳800</div>
+                        </div>
+                        <div class="related-actions">
+                            <button class="btn-secondary preview-btn">Preview</button>
+                            <a href="professional-bundle.html" class="btn-primary">Buy Now</a>
+                        </div>
+                    </div>
+                    <div class="related-card">
+                        <div class="related-image">
+                            <img src="../../assets/images/cv29.jpg" alt="Executive Bundle" data-cv="../../assets/cvs/executive-bundle.pdf">
+                        </div>
+                        <div class="related-details">
+                            <h3 class="related-title">Executive Bundle</h3>
+                            <div class="related-price">৳700</div>
+                        </div>
+                        <div class="related-actions">
+                            <button class="btn-secondary preview-btn">Preview</button>
+                            <a href="executive-bundle.html" class="btn-primary">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Features Section -->
+    <section class="section features" aria-labelledby="features-heading">
+        <div class="container">
+            <h2 class="section-title" id="features-heading">Why Choose Our CV Templates</h2>
+            <div class="features-grid">
+                <div class="feature-box">
+                    <div class="feature-icon">📄</div>
+                    <h3>Professional Design</h3>
+                    <p>Industry-standard templates that impress recruiters</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Download</h3>
+                    <p>Get your CV template immediately after purchase</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Easy to Customize</h3>
+                    <p>Edit in Word, Pages, or Google Docs</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">💼</div>
+                    <h3>Industry Specific</h3>
+                    <p>Templates designed for various professions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Charity Banner -->
+    <section class="container" aria-labelledby="charity-heading">
+        <div class="charity-banner">
+            <div class="charity-content">
+                <h2 class="charity-title" id="charity-heading">Making a Difference Together</h2>
+                <p class="charity-text">For every purchase you make, we donate 1.5tk to support charitable causes. Join us in making a positive impact in our community.</p>
+                <a href="#" class="charity-btn">Watch Our Charity Stream on YouTube</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About IlhamStore</h3>
+                    <p>Your one-stop shop for digital products, apps, games, and gift cards.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><a href="../cv-resume.html">CV/Resume</a></li>
+                        <li><a href="../order-track.html">Order Track</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="refund-policy.html">Refund Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Tiktok</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Donation Info Box -->
+            <div class="donation-info">
+                <div class="donation-stats">
+                    <h3>Our Charity Impact</h3>
+                    <div class="donation-container">
+                        <div class="donation-row">
+                            <span class="donation-label">This month we fund:</span>
+                            <span class="donation-value" id="currentDonation" contenteditable="true" aria-label="Current donation amount, editable">৳15,000</span>
+                        </div>
+                        <div class="donation-row">
+                            <span class="donation-label">Last month we donated:</span>
+                            <div class="charity-details">
+                                <span class="charity-name">Charity Foundation</span>
+                                <span class="charity-amount">৳12,500</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 IlhamStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Live Chat Button -->
+    <button class="live-chat" id="chatButton" aria-label="Open contact options">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <!-- Contact Options -->
+    <div class="contact-options" id="contactOptions">
+        <a href="https://wa.me/1234567890" class="contact-option whatsapp" target="_blank" rel="noopener" aria-label="Contact via WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://t.me/yourtelegram" class="contact-option telegram" target="_blank" rel="noopener" aria-label="Contact via Telegram">
+            <i class="fab fa-telegram-plane"></i>
+        </a>
+        <a href="tel:+1234567890" class="contact-option phone" aria-label="Call us">
+            <i class="fas fa-phone"></i>
+        </a>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content-wrapper">
+            <button class="close" aria-label="Close modal">&times;</button>
+            <div class="modal-image-container">
+                <img class="modal-content" id="modalImage" alt="CV/Resume Preview">
+                <div class="watermark">PREVIEW</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Supabase
+            const supabaseUrl = 'YOUR_SUPABASE_URL';
+            const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            
+            // Product form submission
+            const productForm = document.getElementById('productForm');
+            
+            productForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                
+                // Show loading state
+                const submitBtn = this.querySelector('.btn-buy');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span class="loading-spinner"></span> Processing...';
+                submitBtn.disabled = true;
+                
+                try {
+                    // Create order in Supabase
+                    const { data, error } = await supabase
+                        .from('orders')
+                        .insert([
+                            {
+                                product_name: 'CV Template Bundle',
+                                price: 500,
+                                currency: 'BDT',
+                                email: email,
+                                option: 'bundle',
+                                option_name: '15+ CV Templates Bundle',
+                                status: 'pending',
+                                created_at: new Date().toISOString()
+                            }
+                        ]);
+                    
+                    if (error) throw error;
+                    
+                    // Store order ID in localStorage for checkout page
+                    localStorage.setItem('orderId', data[0].id);
+                    localStorage.setItem('productData', JSON.stringify({
+                        name: 'CV Template Bundle',
+                        price: '৳500',
+                        email: email,
+                        option: 'bundle',
+                        optionName: '15+ CV Templates Bundle'
+                    }));
+                    
+                    // Redirect to checkout page
+                    window.location.href = '../checkout.html';
+                } catch (error) {
+                    console.error('Error creating order:', error);
+                    // Show error message
+                    alert('There was an error processing your order. Please try again.');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+            
+            // Load reviews from Supabase
+            async function loadReviews() {
+                try {
+                    const { data, error } = await supabase
+                        .from('reviews')
+                        .select('*')
+                        .eq('product_id', 'cv-template-bundle')
+                        .eq('status', 'approved')
+                        .order('created_at', { ascending: false });
+                    
+                    if (error) throw error;
+                    
+                    const reviewsContainer = document.getElementById('reviewsContainer');
+                    reviewsContainer.innerHTML = '';
+                    
+                    if (data.length === 0) {
+                        reviewsContainer.innerHTML = '<p>No reviews yet. Be the first to review this product!</p>';
+                        return;
+                    }
+                    
+                    data.forEach(review => {
+                        const reviewItem = document.createElement('div');
+                        reviewItem.className = 'review-item';
+                        
+                        const initials = review.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                        
+                        reviewItem.innerHTML = `
+                            <div class="review-header">
+                                <div class="reviewer-avatar">${initials}</div>
+                                <div class="reviewer-info">
+                                    <div class="reviewer-name">${review.name}</div>
+                                    <div class="review-date">${new Date(review.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                ${generateStarRating(review.rating)}
+                            </div>
+                            <p class="review-text">${review.text}</p>
+                        `;
+                        
+                        reviewsContainer.appendChild(reviewItem);
+                    });
+                } catch (error) {
+                    console.error('Error loading reviews:', error);
+                    document.getElementById('reviewsContainer').innerHTML = '<p>Error loading reviews. Please try again later.</p>';
+                }
+            }
+            
+            // Generate star rating HTML
+            function generateStarRating(rating) {
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= rating) {
+                        stars += '<i class="fas fa-star"></i>';
+                    } else {
+                        stars += '<i class="far fa-star"></i>';
+                    }
+                }
+                return stars;
+            }
+            
+            // Review form functionality
+            const reviewForm = document.getElementById('reviewForm');
+            const ratingStars = document.querySelectorAll('#ratingStars i');
+            const successMessage = document.getElementById('reviewSuccessMessage');
+            const errorMessage = document.getElementById('reviewErrorMessage');
+            const cancelBtn = document.getElementById('cancelReview');
+            const submitBtn = document.getElementById('submitReviewBtn');
+            let selectedRating = 0;
+            
+            // Rating stars functionality
+            ratingStars.forEach(star => {
+                star.addEventListener('click', function() {
+                    selectedRating = parseInt(this.getAttribute('data-rating'));
+                    updateRatingStars();
+                });
+                
+                star.addEventListener('mouseenter', function() {
+                    const hoverRating = parseInt(this.getAttribute('data-rating'));
+                    highlightStars(hoverRating);
+                });
+            });
+            
+            document.getElementById('ratingStars').addEventListener('mouseleave', function() {
+                updateRatingStars();
+            });
+            
+            function updateRatingStars() {
+                highlightStars(selectedRating);
+            }
+            
+            function highlightStars(rating) {
+                ratingStars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.classList.remove('far');
+                        star.classList.add('fas');
+                    } else {
+                        star.classList.remove('fas');
+                        star.classList.add('far');
+                    }
+                });
+            }
+            
+            // Review form submission
+            reviewForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('reviewerName').value;
+                const email = document.getElementById('reviewerEmail').value;
+                const reviewText = document.getElementById('reviewText').value;
+                
+                // Validate that a rating is selected
+                if (selectedRating === 0) {
+                    errorMessage.style.display = 'block';
+                    successMessage.style.display = 'none';
+                    return;
+                }
+                
+                // Show loading state
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span class="loading-spinner"></span> Submitting...';
+                submitBtn.disabled = true;
+                
+                try {
+                    // Create review in Supabase
+                    const { data, error } = await supabase
+                        .from('reviews')
+                        .insert([
+                            {
+                                name: name,
+                                email: email,
+                                rating: selectedRating,
+                                text: reviewText,
+                                product_id: 'cv-template-bundle',
+                                status: 'pending', // Status for admin approval
+                                created_at: new Date().toISOString()
+                            }
+                        ]);
+                    
+                    if (error) throw error;
+                    
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                    
+                    // Reset form
+                    reviewForm.reset();
+                    selectedRating = 0;
+                    updateRatingStars();
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 5000);
+                } catch (error) {
+                    console.error('Error submitting review:', error);
+                    // Show error message
+                    errorMessage.style.display = 'block';
+                    successMessage.style.display = 'none';
+                } finally {
+                    // Reset button state
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+            
+            // Cancel review
+            cancelBtn.addEventListener('click', function() {
+                reviewForm.reset();
+                selectedRating = 0;
+                updateRatingStars();
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+            });
+            
+            // Gallery image preview modal
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const closeBtn = document.querySelector('.close');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const imgSrc = this.querySelector('img').src;
+                    const cvSrc = this.querySelector('img').getAttribute('data-cv');
+                    
+                    modalImg.src = cvSrc || imgSrc;
+                    modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Related product preview functionality
+            const previewBtns = document.querySelectorAll('.preview-btn');
+            
+            previewBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const relatedImage = this.closest('.related-card').querySelector('.related-image img');
+                    const cvSrc = relatedImage.getAttribute('data-cv');
+                    
+                    modalImg.src = cvSrc;
+                    modal.style.display = 'div';
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Load reviews on page load
+            loadReviews();
+        });
+    </script>
+</body>
+</html>

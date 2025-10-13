@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - IlhamStore</title>
+    <meta name="description" content="Thank you for your order! Your order has been received and is being processed.">
+    <meta name="keywords" content="order confirmation, thank you, IlhamStore">
+    <meta name="author" content="IlhamStore">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Order Confirmation - IlhamStore">
+    <meta property="og:description" content="Thank you for your order! Your order has been received and is being processed.">
+    <meta property="og:image" content="https://picsum.photos/seed/confirmation/1200/630.jpg">
+    <meta property="og:url" content="https://yourusername.github.io/yourrepo/pages/order-confirmation.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourusername.github.io/yourrepo/pages/order-confirmation.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <style>
+        /* Color Variables - Matching Homepage */
+        :root {
+            --primary-color: #1C352D;
+            --secondary-color: #A6B28B;
+            --accent-color: #2d5f47;
+            --light-color: #f5f5f5;
+            --white: #ffffff;
+            --light-gray: #e0e0e0;
+            --medium-gray: #9e9e9e;
+            --dark-gray: #424242;
+            --black: #000000;
+            --star-color: #ffc107;
+            
+            /* Gradients with Green Colors */
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            --gradient-light: linear-gradient(135deg, var(--light-color) 0%, var(--white) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+            --gradient-logo: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --gradient-contact: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+        
+        .confirmation-page {
+            padding: 40px 0;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            background: var(--gradient-light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .confirmation-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+            animation: shimmer 15s infinite linear;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .confirmation-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .confirmation-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-logo);
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .success-icon {
+            font-size: 80px;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            animation: scaleIn 0.5s ease-out, pulse 2s infinite 1s;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .confirmation-title {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .confirmation-message {
+            font-size: 18px;
+            color: var(--dark-gray);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+        
+        .auto-download-notice {
+            background: var(--gradient-light);
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideDown 0.8s ease-out 0.9s both;
+            border: 1px solid var(--secondary-color);
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .auto-download-text {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            color: var(--primary-color);
+        }
+        
+        .auto-download-text i {
+            color: var(--accent-color);
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .countdown {
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .cancel-download {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 15px;
+            text-decoration: underline;
+            transition: all 0.3s ease;
+        }
+        
+        .cancel-download:hover {
+            color: var(--primary-color);
+        }
+        
+        .receipt-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-out 1.2s both;
+        }
+        
+        .receipt-option {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid transparent;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark-gray);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .receipt-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .receipt-option.active {
+            background: var(--gradient-logo);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+        
+        .order-details {
+            background: var(--gradient-light);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: left;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 1s ease-out 1.5s both;
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .order-details h3 {
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .order-details h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-logo);
+        }
+        
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            animation: slideIn 0.5s ease-out both;
+            opacity: 0;
+        }
+        
+        .order-row:nth-child(2) { animation-delay: 0.1s; }
+        .order-row:nth-child(3) { animation-delay: 0.2s; }
+        .order-row:nth-child(4) { animation-delay: 0.3s; }
+        .order-row:nth-child(5) { animation-delay: 0.4s; }
+        .order-row:nth-child(6) { animation-delay: 0.5s; }
+        .order-row:nth-child(7) { animation-delay: 0.6s; }
+        .order-row:nth-child(8) { animation-delay: 0.7s; }
+        .order-row:nth-child(9) { animation-delay: 0.8s; }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .order-row:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--accent-color);
+            padding-top: 15px;
+            margin-top: 5px;
+            border-top: 2px dashed rgba(0, 0, 0, 0.1);
+        }
+        
+        .order-label {
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+        
+        .order-value {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-out 1.8s both;
+        }
+        
+        .btn-download {
+            background: var(--gradient-logo);
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-download::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-secondary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .btn-download:hover::before {
+            opacity: 1;
+        }
+        
+        .btn-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-download i {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .btn-download span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .btn-continue {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-continue:hover {
+            background: var(--gradient-logo);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .contact-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-out 2.1s both;
+        }
+        
+        .contact-info p {
+            font-size: 16px;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+        }
+        
+        .contact-info a {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-info a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .contact-info a:hover::after {
+            width: 100%;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary-color);
+            position: absolute;
+            animation: confetti-fall linear forwards;
+            z-index: 0;
+        }
+        
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(28, 53, 45, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .download-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--gradient-logo);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 1000;
+        }
+        
+        .download-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .download-notification i {
+            font-size: 20px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .confirmation-container {
+                padding: 30px 20px;
+            }
+            
+            .confirmation-title {
+                font-size: 28px;
+            }
+            
+            .confirmation-message {
+                font-size: 16px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn-download, .btn-continue {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .receipt-options {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .receipt-option {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+            
+            .auto-download-notice {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo-container">
+                    <img src="https://picsum.photos/seed/logo/40/40.jpg" alt="IlhamStore Logo" class="logo">
+                    <div class="logo-text">
+                        <a href="../index.html" class="logo-name">IlhamStore</a>
+                        <div class="tagline">👉 Click. Buy. Care.</div>
+                    </div>
+                </div>
+                
+                <div class="search-container">
+                    <form id="searchForm" role="search">
+                        <label for="searchInput" class="sr-only">Search products</label>
+                        <input type="text" id="searchInput" class="search-box" placeholder="Search products..." aria-label="Search products">
+                        <button type="button" class="clear-btn" title="Clear search" aria-label="Clear search"><i class="fas fa-times"></i></button>
+                        <button type="submit" class="search-btn" title="Search" aria-label="Search"><i class="fas fa-search"></i></button>
+                    </form>
+                    <div class="search-results" role="region" aria-live="polite"></div>
+                </div>
+                
+                <a href="../user/login.html" class="account-btn" id="accountBtn" aria-label="Account">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="accountText">Account</span>
+                </a>
+                
+                <button class="mobile-menu-btn" title="Open mobile menu" aria-label="Open mobile menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        
+        <!-- Mobile Search Bar (Bottom of Header) -->
+        <div class="mobile-search-bar">
+            <form id="mobileSearchForm" role="search">
+                <label for="mobileSearchInput" class="sr-only">Search products</label>
+                <input type="text" id="mobileSearchInput" class="mobile-search-input" placeholder="Search for CV templates, games, apps..." aria-label="Search products">
+                <button type="submit" class="mobile-search-submit" aria-label="Search"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="mobile-search-results" role="region" aria-live="polite"></div>
+        </div>
+    </header>
+
+    <!-- Navigation Section -->
+    <nav role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="cv-resume.html" class="nav-link">CV/Resume</a>
+                </li>
+                <li class="nav-item">
+                    <a href="order-track.html" class="nav-link">Order Track</a>
+                </li>
+                <li class="nav-item">
+                    <a href="e-products.html" class="nav-link">E-Products</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">About Us <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <a href="about.html" class="dropdown-item">About Us</a>
+                        <a href="faq.html" class="dropdown-item">FAQ</a>
+                        <a href="support.html" class="dropdown-item">Support</a>
+                        <a href="refund-policy.html" class="dropdown-item">Refund Policy</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu" role="navigation" aria-label="Mobile navigation">
+        <div class="mobile-nav-header">
+            <h3>Menu</h3>
+            <button class="mobile-nav-close" title="Close mobile menu" aria-label="Close mobile menu"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="mobile-nav-list">
+            <li class="mobile-nav-item">
+                <a href="../index.html" class="mobile-nav-link">Home</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="cv-resume.html" class="mobile-nav-link">CV/Resume</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="order-track.html" class="mobile-nav-link">Order Track</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="e-products.html" class="mobile-nav-link">E-Products</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link">About Us</a>
+                <ul class="mobile-dropdown">
+                    <li><a href="about.html" class="mobile-dropdown-item">About Us</a></li>
+                    <li><a href="faq.html" class="mobile-dropdown-item">FAQ</a></li>
+                    <li><a href="support.html" class="mobile-dropdown-item">Support</a></li>
+                    <li><a href="refund-policy.html" class="mobile-dropdown-item">Refund Policy</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="container" id="main-content">
+        <!-- Confirmation Page -->
+        <section class="confirmation-page">
+            <div class="confirmation-container">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h1 class="confirmation-title">Thank You for Your Order!</h1>
+                <p class="confirmation-message">
+                    Your order has been received and is now being processed. We've sent a confirmation email with all the details of your order.
+                </p>
+                
+                <div class="auto-download-notice" id="autoDownloadNotice">
+                    <div class="auto-download-text">
+                        <i class="fas fa-download"></i>
+                        <span>Your receipt will be automatically downloaded in</span>
+                        <div class="countdown" id="countdown">5</div>
+                        <span>seconds</span>
+                    </div>
+                    <button class="cancel-download" id="cancelDownload">Cancel</button>
+                </div>
+                
+                <div class="receipt-options">
+                    <div class="receipt-option active" data-format="jpg">
+                        <i class="fas fa-file-image"></i> JPG Receipt
+                    </div>
+                    <div class="receipt-option" data-format="png">
+                        <i class="fas fa-file-image"></i> PNG Receipt
+                    </div>
+                </div>
+                
+                <div class="order-details" id="orderDetails">
+                    <h3>Order Summary</h3>
+                    <!-- Order details will be populated by JavaScript -->
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn-download" id="downloadReceipt">
+                        <i class="fas fa-download"></i>
+                        <span>Download Receipt</span>
+                    </button>
+                    <a href="../index.html" class="btn-continue">Continue Shopping</a>
+                </div>
+                
+                <div class="contact-info">
+                    <p>Have questions about your order? <a href="https://wa.me/8801XXXXXXXXX" target="_blank">Contact us on WhatsApp</a></p>
+                    <p>Or email us at <a href="mailto:support@ilhamstore.com">support@ilhamstore.com</a></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Download Notification -->
+    <div class="download-notification" id="downloadNotification">
+        <i class="fas fa-check-circle"></i>
+        <span>Receipt downloaded successfully!</span>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About IlhamStore</h3>
+                    <p>Your one-stop shop for digital products, apps, games, and gift cards.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="cv-resume.html">CV/Resume</a></li>
+                        <li><a href="order-track.html">Order Track</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="refund-policy.html">Refund Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Tiktok</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Donation Info Box -->
+            <div class="donation-info">
+                <div class="donation-stats">
+                    <h3>Our Charity Impact</h3>
+                    <div class="donation-container">
+                        <div class="donation-row">
+                            <span class="donation-label">This month we fund:</span>
+                            <span class="donation-value" id="currentDonation" contenteditable="true" aria-label="Current donation amount, editable">৳15,000</span>
+                        </div>
+                        <div class="donation-row">
+                            <span class="donation-label">Last month we donated:</span>
+                            <div class="charity-details">
+                                <span class="charity-name">Charity Foundation</span>
+                                <span class="charity-amount">৳12,500</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 IlhamStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Live Chat Button -->
+    <button class="live-chat" id="chatButton" aria-label="Open contact options">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <!-- Contact Options -->
+    <div class="contact-options" id="contactOptions">
+        <a href="https://wa.me/1234567890" class="contact-option whatsapp" target="_blank" rel="noopener" aria-label="Contact via WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://t.me/yourtelegram" class="contact-option telegram" target="_blank" rel="noopener" aria-label="Contact via Telegram">
+            <i class="fab fa-telegram-plane"></i>
+        </a>
+        <a href="tel:+1234567890" class="contact-option phone" aria-label="Call us">
+            <i class="fas fa-phone"></i>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create confetti effect
+            function createConfetti() {
+                const colors = ['#1C352D', '#2d5f47', '#A6B28B', '#f5f5f5'];
+                const confettiCount = 100;
+                
+                for (let i = 0; i < confettiCount; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.className = 'confetti';
+                        confetti.style.left = Math.random() * 100 + '%';
+                        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.width = Math.random() * 10 + 5 + 'px';
+                        confetti.style.height = Math.random() * 10 + 5 + 'px';
+                        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                        confetti.style.opacity = Math.random() * 0.8 + 0.2;
+                        confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                        document.querySelector('.confirmation-page').appendChild(confetti);
+                        
+                        // Remove confetti after animation completes
+                        setTimeout(() => {
+                            confetti.remove();
+                        }, 5000);
+                    }, i * 30);
+                }
+            }
+            
+            // Trigger confetti effect
+            createConfetti();
+            
+            // Get order data from localStorage
+            const orderData = JSON.parse(localStorage.getItem('orderData')) || {};
+            
+            // If no order data, redirect to home
+            if (!orderData.invoice_id) {
+                window.location.href = '../index.html';
+                return;
+            }
+            
+            // Populate order details
+            const orderDetails = document.getElementById('orderDetails');
+            const orderDate = new Date(orderData.date).toLocaleString();
+            
+            orderDetails.innerHTML = `
+                <div class="order-row">
+                    <div class="order-label">Order Number</div>
+                    <div class="order-value">${orderData.invoice_id || 'N/A'}</div>
+                </div>
+                <div class="order-row">
+                    <div class="order-label">Date</div>
+                    <div class="order-value">${orderDate}</div>
+                </div>
+                <div class="order-row">
+                    <div class="order-label">Product</div>
+                    <div class="order-value">${orderData.product_name || 'N/A'}</div>
+                </div>
+                <div class="order-row">
+                    <div class="order-label">Package/Option</div>
+                    <div class="order-value">${orderData.product_option || 'N/A'}</div>
+                </div>
+                <div class="order-row">
+                    <div class="order-label">User ID/Email</div>
+                    <div class="order-value">${orderData.product_user_id || 'N/A'}</div>
+                </div>
+                <div class="order-row">
+                    <div class="order-label">Customer Name</div>
+                    <div class="order-value">${orderData.customer_name || 'N/A'}</div>
+                </div>
+                <div class="order-row">
+                    <div class="order-label">Phone</div>
+                    <div class="order-value">${orderData.customer_phone || 'N/A'}</div>
+                </div>
+                <div class="order-row">
+                    <div class="order-label">Email</div>
+                    <div class="order-value">${orderData.customer_email || 'N/A'}</div>
+                </div>
+                <div class="order-row">
+                    <div class="order-label">Payment Method</div>
+                    <div class="order-value">${orderData.payment_method || 'N/A'}</div>
+                </div>
+                <div class="order-row">
+                    <div class="order-label">Total</div>
+                    <div class="order-value">${orderData.product_price || '৳0'}</div>
+                </div>
+            `;
+            
+            // Auto download functionality
+            const autoDownloadNotice = document.getElementById('autoDownloadNotice');
+            const countdownElement = document.getElementById('countdown');
+            const cancelDownloadBtn = document.getElementById('cancelDownload');
+            let countdown = 5;
+            let autoDownloadInterval;
+            let autoDownloadCancelled = false;
+            
+            // Start countdown
+            autoDownloadInterval = setInterval(() => {
+                countdown--;
+                countdownElement.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(autoDownloadInterval);
+                    if (!autoDownloadCancelled) {
+                        // Auto download receipt
+                        const selectedFormat = document.querySelector('.receipt-option.active').getAttribute('data-format');
+                        generateImageReceipt(selectedFormat);
+                        
+                        // Hide auto download notice
+                        autoDownloadNotice.style.display = 'none';
+                    }
+                }
+            }, 1000);
+            
+            // Cancel auto download
+            cancelDownloadBtn.addEventListener('click', function() {
+                clearInterval(autoDownloadInterval);
+                autoDownloadCancelled = true;
+                autoDownloadNotice.style.display = 'none';
+            });
+            
+            // Receipt format selection
+            const receiptOptions = document.querySelectorAll('.receipt-option');
+            let selectedFormat = 'jpg';
+            
+            receiptOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    receiptOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedFormat = this.getAttribute('data-format');
+                });
+            });
+            
+            // Loading overlay
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            // Download notification
+            const downloadNotification = document.getElementById('downloadNotification');
+            
+            // Show download notification
+            function showDownloadNotification() {
+                downloadNotification.classList.add('show');
+                setTimeout(() => {
+                    downloadNotification.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Download receipt functionality
+            const downloadBtn = document.getElementById('downloadReceipt');
+            
+            downloadBtn.addEventListener('click', function() {
+                // Cancel auto download if it's still running
+                if (!autoDownloadCancelled && countdown > 0) {
+                    clearInterval(autoDownloadInterval);
+                    autoDownloadCancelled = true;
+                    autoDownloadNotice.style.display = 'none';
+                }
+                
+                // Show loading overlay
+                loadingOverlay.classList.add('active');
+                
+                // Simulate processing time
+                setTimeout(() => {
+                    generateImageReceipt(selectedFormat);
+                    loadingOverlay.classList.remove('active');
+                    showDownloadNotification();
+                }, 1500);
+            });
+            
+            // Generate Image receipt (JPG/PNG)
+            function generateImageReceipt(format) {
+                // Create a canvas element
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Set canvas size
+                canvas.width = 600;
+                canvas.height = 800;
+                
+                // Set background with gradient
+                const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                gradient.addColorStop(0, '#ffffff');
+                gradient.addColorStop(1, '#f8f9fa');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Add decorative border
+                ctx.strokeStyle = '#1C352D';
+                ctx.lineWidth = 5;
+                ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+                
+                // Add inner border
+                ctx.strokeStyle = '#2d5f47';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+                
+                // Add header background
+                const headerGradient = ctx.createLinearGradient(0, 0, 0, 120);
+                headerGradient.addColorStop(0, 'rgba(28, 53, 45, 0.05)');
+                headerGradient.addColorStop(1, 'rgba(28, 53, 45, 0.01)');
+                ctx.fillStyle = headerGradient;
+                ctx.fillRect(20, 20, canvas.width - 40, 100);
+                
+                // Add logo (placeholder)
+                ctx.fillStyle = '#1C352D';
+                ctx.font = 'bold 36px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('ILHAMSTORE', canvas.width / 2, 65);
+                
+                // Add tagline
+                ctx.fillStyle = '#2d5f47';
+                ctx.font = '16px Arial';
+                ctx.fillText('Digital Top-up & Gift Cards', canvas.width / 2, 90);
+                
+                // Add title with decorative line
+                ctx.fillStyle = '#1C352D';
+                ctx.font = 'bold 24px Arial';
+                ctx.fillText('ORDER RECEIPT', canvas.width / 2, 120);
+                
+                // Add decorative line under title
+                ctx.beginPath();
+                ctx.moveTo(150, 130);
+                ctx.lineTo(450, 130);
+                ctx.strokeStyle = '#2d5f47';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Add receipt number in a decorative box
+                ctx.fillStyle = 'rgba(28, 53, 45, 0.05)';
+                ctx.fillRect(50, 150, 500, 40);
+                ctx.fillStyle = '#1C352D';
+                ctx.font = 'bold 18px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText(`Receipt #: ${orderData.invoice_id || 'N/A'}`, 70, 175);
+                
+                // Add order details
+                ctx.fillStyle = '#333333';
+                ctx.font = '16px Arial';
+                
+                const details = [
+                    { label: 'Date:', value: orderDate },
+                    { label: 'Product:', value: orderData.product_name || 'N/A' },
+                    { label: 'Package/Option:', value: orderData.product_option || 'N/A' },
+                    { label: 'User ID/Email:', value: orderData.product_user_id || 'N/A' },
+                    { label: 'Customer Name:', value: orderData.customer_name || 'N/A' },
+                    { label: 'Phone:', value: orderData.customer_phone || 'N/A' },
+                    { label: 'Email:', value: orderData.customer_email || 'N/A' },
+                    { label: 'Payment Method:', value: orderData.payment_method || 'N/A' }
+                ];
+                
+                details.forEach((detail, index) => {
+                    // Add alternating row background
+                    if (index % 2 === 0) {
+                        ctx.fillStyle = 'rgba(166, 178, 139, 0.1)';
+                        ctx.fillRect(50, 210 + (index * 35), 500, 35);
+                    }
+                    
+                    // Add label
+                    ctx.fillStyle = '#333333';
+                    ctx.fillText(detail.label, 70, 232 + (index * 35));
+                    
+                    // Add value
+                    ctx.fillStyle = '#1C352D';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillText(detail.value, 250, 232 + (index * 35));
+                    ctx.font = '16px Arial';
+                });
+                
+                // Add separator line
+                ctx.beginPath();
+                ctx.moveTo(50, 495);
+                ctx.lineTo(550, 495);
+                ctx.strokeStyle = '#ddd';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 3]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Add total with highlight background
+                ctx.fillStyle = 'rgba(45, 95, 71, 0.1)';
+                ctx.fillRect(50, 505, 500, 40);
+                ctx.fillStyle = '#2d5f47';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText(`Total: ${orderData.product_price || '৳0'}`, 70, 530);
+                
+                // Add thank you message
+                ctx.fillStyle = '#333333';
+                ctx.font = '18px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Thank you for shopping at IlhamStore!', canvas.width / 2, 585);
+                
+                // Add contact info
+                ctx.font = '14px Arial';
+                ctx.fillText('support@ilhamstore.com | +8801XXXXXXXXX', canvas.width / 2, 615);
+                
+                // Add website
+                ctx.fillStyle = '#1C352D';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('www.ilhamstore.com', canvas.width / 2, 640);
+                
+                // Add footer with decorative pattern
+                const footerGradient = ctx.createLinearGradient(0, 665, 0, canvas.height - 20);
+                footerGradient.addColorStop(0, 'rgba(28, 53, 45, 0.05)');
+                footerGradient.addColorStop(1, 'rgba(28, 53, 45, 0.01)');
+                ctx.fillStyle = footerGradient;
+                ctx.fillRect(20, 665, canvas.width - 40, canvas.height - 685);
+                
+                // Add decorative circles at bottom
+                ctx.fillStyle = 'rgba(166, 178, 139, 0.2)';
+                for (let i = 0; i < 20; i++) {
+                    ctx.beginPath();
+                    ctx.arc(30 + i * 28, 695, 8, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                
+                // Add watermark
+                ctx.save();
+                ctx.globalAlpha = 0.03;
+                ctx.fillStyle = '#1C352D';
+                ctx.font = 'bold 100px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate(-Math.PI / 4); // Rotate the watermark
+                ctx.fillText('ILHAMSTORE', 0, 0);
+                ctx.restore();
+                
+                // Add a unique receipt design element - a decorative pattern at the top right
+                ctx.fillStyle = 'rgba(45, 95, 71, 0.1)';
+                for (let i = 0; i < 5; i++) {
+                    for (let j = 0; j < 5; j++) {
+                        if ((i + j) % 2 === 0) {
+                            ctx.beginPath();
+                            ctx.arc(450 + i * 25, 50 + j * 15, 5, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    }
+                }
+                
+                // Add a unique receipt design element - a decorative pattern at the bottom left
+                ctx.fillStyle = 'rgba(28, 53, 45, 0.05)';
+                for (let i = 0; i < 4; i++) {
+                    for (let j = 0; j < 4; j++) {
+                        if ((i + j) % 2 === 1) {
+                            ctx.beginPath();
+                            ctx.arc(70 + i * 30, 665 + j * 20, 7, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    }
+                }
+                
+                // Add "PAID" stamp if payment is completed
+                if (orderData.transaction_id) {
+                    ctx.save();
+                    ctx.translate(450, 250);
+                    ctx.rotate(-0.2); // Slight rotation for stamp effect
+                    ctx.fillStyle = 'rgba(45, 95, 71, 0.2)';
+                    ctx.fillRect(-40, -40, 80, 80);
+                    ctx.strokeStyle = '#2d5f47';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(-40, -40, 80, 80);
+                    ctx.fillStyle = '#2d5f47';
+                    ctx.font = 'bold 24px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('PAID', 0, 0);
+                    ctx.restore();
+                }
+                
+                // Convert canvas to image
+                canvas.toBlob(function(blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `receipt-${orderData.invoice_id || 'order'}.${format}`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, `image/${format}`);
+            }
+            
+            // Send confirmation email if email is provided
+            if (orderData.customer_email) {
+                // In a real application, you would send an email here
+                // For demo purposes, we'll just log it
+                console.log(`Confirmation email would be sent to ${orderData.customer_email}`);
+            }
+        });
+    </script>
+</body>
+</html>

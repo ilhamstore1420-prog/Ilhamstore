@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - IlhamStore</title>
+    <meta name="description" content="Complete your purchase of CV templates, game top-ups, and digital products at IlhamStore">
+    <meta name="keywords" content="checkout, payment, CV templates, game top-up, IlhamStore">
+    <meta name="author" content="IlhamStore">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Checkout - IlhamStore">
+    <meta property="og:description" content="Complete your purchase of CV templates, game top-ups, and digital products at IlhamStore">
+    <meta property="og:image" content="https://picsum.photos/seed/checkout/1200/630.jpg">
+    <meta property="og:url" content="https://yourusername.github.io/yourrepo/pages/checkout.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourusername.github.io/yourrepo/pages/checkout.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <style>
+        /* Checkout Page Specific Styles */
+        .checkout-page {
+            padding: 40px 0;
+            background: var(--gradient-light);
+            min-height: calc(100vh - 120px);
+        }
+        
+        .checkout-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .checkout-header h1 {
+            font-size: 32px;
+            color: var(--black);
+            margin-bottom: 10px;
+        }
+        
+        .checkout-header p {
+            color: var(--dark-gray);
+            font-size: 16px;
+        }
+        
+        .checkout-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .checkout-steps::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--light-gray);
+            z-index: 0;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            background: var(--white);
+            padding: 0 10px;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--gradient-logo);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .step.completed .step-number {
+            background: var(--medium-gray);
+        }
+        
+        .step.active .step-number {
+            background: var(--medium-gray);
+            box-shadow: 0 0 0 4px rgba(127, 127, 127, 0.3);
+        }
+        
+        .step-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark-gray);
+            text-align: center;
+        }
+        
+        .order-summary {
+            background: var(--gradient-light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .order-summary h2 {
+            font-size: 20px;
+            color: var(--black);
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .order-summary h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--gradient-logo);
+        }
+        
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        
+        .summary-table th {
+            text-align: left;
+            padding: 12px 15px;
+            background: var(--black);
+            color: var(--white);
+            font-weight: 500;
+        }
+        
+        .summary-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .summary-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .summary-table .product-name {
+            font-weight: 500;
+            color: var(--black);
+        }
+        
+        .summary-table .product-details {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+        
+        .summary-table .price {
+            font-weight: 600;
+            color: var(--medium-gray);
+        }
+        
+        .summary-table .discount {
+            color: var(--medium-gray);
+            font-size: 12px;
+        }
+        
+        .summary-table .total-row td {
+            font-weight: 700;
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .customer-info {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .customer-info h2 {
+            font-size: 20px;
+            color: var(--black);
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .customer-info h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--gradient-logo);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .info-group {
+            margin-bottom: 15px;
+        }
+        
+        .info-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--black);
+        }
+        
+        .info-group input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .info-group input:focus {
+            border-color: var(--medium-gray);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(127, 127, 127, 0.2);
+        }
+        
+        .payment-methods {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .payment-methods h2 {
+            font-size: 20px;
+            color: var(--black);
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .payment-methods h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--gradient-logo);
+        }
+        
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .payment-option {
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .payment-option:hover {
+            border-color: var(--medium-gray);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .payment-option.selected {
+            border-color: var(--medium-gray);
+            background: rgba(127, 127, 127, 0.05);
+        }
+        
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            background: var(--gradient-light);
+            border-radius: 50%;
+            color: var(--black);
+            font-size: 18px;
+        }
+        
+        .payment-details {
+            flex: 1;
+        }
+        
+        .payment-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 5px;
+        }
+        
+        .payment-desc {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+        
+        .payment-form {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid var(--light-gray);
+            display: none;
+        }
+        
+        .payment-form.active {
+            display: block;
+        }
+        
+        .payment-form h3 {
+            font-size: 18px;
+            color: var(--black);
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .payment-form h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--gradient-logo);
+        }
+        
+        .payment-instructions {
+            background: var(--gradient-light);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .payment-instructions h4 {
+            font-size: 16px;
+            color: var(--black);
+            margin-bottom: 10px;
+        }
+        
+        .payment-instructions ol {
+            padding-left: 20px;
+            margin: 0;
+        }
+        
+        .payment-instructions li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .account-number {
+            font-weight: 600;
+            color: var(--medium-gray);
+        }
+        
+        .copy-btn-inline {
+            background: var(--gradient-logo);
+            color: var(--white);
+            border: none;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn-inline:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--black);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--medium-gray);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(127, 127, 127, 0.2);
+        }
+        
+        .form-hint {
+            font-size: 12px;
+            color: var(--dark-gray);
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .btn-complete {
+            background: var(--gradient-logo);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-complete:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-complete:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .order-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn-back {
+            background: transparent;
+            color: var(--black);
+            border: 1px solid var(--light-gray);
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-back:hover {
+            background: var(--white);
+        }
+        
+        .btn-place-order {
+            background: var(--gradient-logo);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-place-order:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--black);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+        
+        .btn-place-order.loading .loading-spinner {
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            z-index: 1000;
+            color: var(--white);
+            font-weight: 500;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .notification.success {
+            background-color: var(--medium-gray);
+        }
+        
+        .notification.error {
+            background-color: var(--medium-gray);
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .checkout-container {
+                padding: 20px 15px;
+            }
+            
+            .checkout-steps {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .checkout-steps::before {
+                width: 2px;
+                height: 100%;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .step {
+                flex-direction: row;
+                justify-content: center;
+                padding: 0 10px;
+            }
+            
+            .step-number {
+                margin-right: 10px;
+                margin-bottom: 0;
+            }
+            
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .order-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo-container">
+                    <img src="https://picsum.photos/seed/logo/40/40.jpg" alt="IlhamStore Logo" class="logo">
+                    <div class="logo-text">
+                        <a href="../index.html" class="logo-name">IlhamStore</a>
+                        <div class="tagline">👉 Click. Buy. Care.</div>
+                    </div>
+                </div>
+                
+                <div class="search-container">
+                    <form id="searchForm" role="search">
+                        <label for="searchInput" class="sr-only">Search products</label>
+                        <input type="text" id="searchInput" class="search-box" placeholder="Search products..." aria-label="Search products">
+                        <button type="button" class="clear-btn" title="Clear search" aria-label="Clear search"><i class="fas fa-times"></i></button>
+                        <button type="submit" class="search-btn" title="Search" aria-label="Search"><i class="fas fa-search"></i></button>
+                    </form>
+                    <div class="search-results" role="region" aria-live="polite"></div>
+                </div>
+                
+                <a href="../user/login.html" class="account-btn" id="accountBtn" aria-label="Account">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="accountText">Account</span>
+                </a>
+                
+                <button class="mobile-menu-btn" title="Open mobile menu" aria-label="Open mobile menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        
+        <!-- Mobile Search Bar (Bottom of Header) -->
+        <div class="mobile-search-bar">
+            <form id="mobileSearchForm" role="search">
+                <label for="mobileSearchInput" class="sr-only">Search products</label>
+                <input type="text" id="mobileSearchInput" class="mobile-search-input" placeholder="Search for CV templates, games, apps..." aria-label="Search products">
+                <button type="submit" class="mobile-search-submit" aria-label="Search"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="mobile-search-results" role="region" aria-live="polite"></div>
+        </div>
+    </header>
+    
+    <!-- Navigation Section -->
+    <nav role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="cv-resume.html" class="nav-link">CV/Resume</a>
+                </li>
+                <li class="nav-item">
+                    <a href="order-track.html" class="nav-link">Order Track</a>
+                </li>
+                <li class="nav-item">
+                    <a href="e-products.html" class="nav-link">E-Products</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">About Us <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <a href="about.html" class="dropdown-item">About Us</a>
+                        <a href="faq.html" class="dropdown-item">FAQ</a>
+                        <a href="support.html" class="dropdown-item">Support</a>
+                        <a href="refund-policy.html" class="dropdown-item">Refund Policy</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu" role="navigation" aria-label="Mobile navigation">
+        <div class="mobile-nav-header">
+            <h3>Menu</h3>
+            <button class="mobile-nav-close" title="Close mobile menu" aria-label="Close mobile menu"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="mobile-nav-list">
+            <li class="mobile-nav-item">
+                <a href="../index.html" class="mobile-nav-link">Home</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="cv-resume.html" class="mobile-nav-link">CV/Resume</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="order-track.html" class="mobile-nav-link">Order Track</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="e-products.html" class="mobile-nav-link">E-Products</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link">About Us</a>
+                <ul class="mobile-dropdown">
+                    <li><a href="about.html" class="mobile-dropdown-item">About Us</a></li>
+                    <li><a href="faq.html" class="mobile-dropdown-item">FAQ</a></li>
+                    <li><a href="support.html" class="mobile-dropdown-item">Support</a></li>
+                    <li><a href="refund-policy.html" class="mobile-dropdown-item">Refund Policy</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="container" id="main-content">
+        <!-- Checkout Page -->
+        <section class="checkout-page">
+            <div class="checkout-container">
+                <div class="checkout-header">
+                    <h1>Checkout</h1>
+                    <p>Complete your purchase securely and instantly receive your digital products</p>
+                </div>
+                
+                <div class="checkout-steps">
+                    <div class="step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Cart</div>
+                    </div>
+                    <div class="step completed">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Details</div>
+                    </div>
+                    <div class="step active">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Payment</div>
+                    </div>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2>Order Summary</h2>
+                    <table class="summary-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Details</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderItems">
+                            <!-- Order items will be populated here -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td colspan="2">Total</td>
+                                <td id="totalPrice">৳0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                
+                <!-- Customer Information -->
+                <div class="customer-info">
+                    <h2>Your Information</h2>
+                    <div class="info-grid">
+                        <div class="info-group">
+                            <label for="customerName">Full Name</label>
+                            <input type="text" id="customerName" class="form-control" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="info-group">
+                            <label for="customerEmail">Email Address</label>
+                            <input type="email" id="customerEmail" class="form-control" placeholder="Enter your email address" required>
+                        </div>
+                        <div class="info-group">
+                            <label for="customerPhone">Phone Number</label>
+                            <input type="tel" id="customerPhone" class="form-control" placeholder="Enter your phone number" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Payment Methods -->
+                <div class="payment-methods">
+                    <h2>Payment Method</h2>
+                    <div class="payment-options">
+                        <div class="payment-option selected" data-method="bkash">
+                            <div class="payment-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="payment-details">
+                                <div class="payment-name">bKash</div>
+                                <div class="payment-desc">Pay with bKash Personal</div>
+                            </div>
+                        </div>
+                        <div class="payment-option" data-method="nagad">
+                            <div class="payment-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="payment-details">
+                                <div class="payment-name">Nagad</div>
+                                <div class="payment-desc">Pay with Nagad</div>
+                            </div>
+                        </div>
+                        <div class="payment-option" data-method="rocket">
+                            <div class="payment-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="payment-details">
+                                <div class="payment-name">Rocket</div>
+                                <div class="payment-desc">Pay with Rocket</div>
+                            </div>
+                        </div>
+                        <div class="payment-option" data-method="upay">
+                            <div class="payment-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="payment-details">
+                                <div class="payment-name">Upay</div>
+                                <div class="payment-desc">Pay with Upay</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Form -->
+                    <div class="payment-form active" id="paymentForm">
+                        <h3>Complete Your Payment</h3>
+                        <div class="payment-instructions" id="paymentInstructions">
+                            <!-- Payment instructions will be populated here -->
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="transactionId">Transaction ID</label>
+                                <input type="text" id="transactionId" class="form-control" placeholder="Enter your transaction ID" required>
+                                <p class="form-hint">After completing your payment, enter the transaction ID here</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="paymentNumber">Payment Number</label>
+                                <input type="text" id="paymentNumber" class="form-control" placeholder="Enter your payment number" required>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-complete" id="completePaymentBtn">Verify Payment</button>
+                    </div>
+                </div>
+                
+                <div class="order-actions">
+                    <a href="e-products.html" class="btn-back">Continue Shopping</a>
+                    <button type="button" class="btn-place-order" id="placeOrderBtn">Place Order</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About IlhamStore</h3>
+                    <p>Your one-stop shop for digital products, apps, games, and gift cards.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="cv-resume.html">CV/Resume</a></li>
+                        <li><a href="order-track.html">Order Track</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="refund-policy.html">Refund Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Tiktok</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Donation Info Box -->
+            <div class="donation-info">
+                <div class="donation-stats">
+                    <h3>Our Charity Impact</h3>
+                    <div class="donation-container">
+                        <div class="donation-row">
+                            <span class="donation-label">This month we fund:</span>
+                            <span class="donation-value" id="currentDonation" contenteditable="true" aria-label="Current donation amount, editable">৳15,000</span>
+                        </div>
+                        <div class="donation-row">
+                            <span class="donation-label">Last month we donated:</span>
+                            <div class="charity-details">
+                                <span class="charity-name">Charity Foundation</span>
+                                <span class="charity-amount">৳12,500</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 IlhamStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Live Chat Button -->
+    <button class="live-chat" id="chatButton" aria-label="Open contact options">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <!-- Contact Options -->
+    <div class="contact-options" id="contactOptions">
+        <a href="https://wa.me/1234567890" class="contact-option whatsapp" target="_blank" rel="noopener" aria-label="Contact via WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://t.me/yourtelegram" class="contact-option telegram" target="_blank" rel="noopener" aria-label="Contact via Telegram">
+            <i class="fab fa-telegram-plane"></i>
+        </a>
+        <a href="tel:+1234567890" class="contact-option phone" aria-label="Call us">
+            <i class="fas fa-phone"></i>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/script.js"></script>
+    <script>
+        // Account numbers for each payment provider
+        const accountNumbers = {
+            bkash: '01558086520',
+            nagad: '01558086520',
+            rocket: '01558086520',
+            upay: '01558086520'
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get order data from localStorage
+            const orderData = JSON.parse(localStorage.getItem('productData') || '{}');
+            
+            // If no order data, redirect to home
+            if (!orderData.name) {
+                window.location.href = '../index.html';
+                return;
+            }
+            
+            // Initialize variables
+            let selectedPaymentMethod = 'bkash';
+            let isProcessing = false;
+            let paymentAmount = orderData.price || '৳0';
+            
+            // DOM elements
+            const orderItems = document.getElementById('orderItems');
+            const totalPrice = document.getElementById('totalPrice');
+            const customerName = document.getElementById('customerName');
+            const customerEmail = document.getElementById('customerEmail');
+            const customerPhone = document.getElementById('customerPhone');
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            const paymentForm = document.getElementById('paymentForm');
+            const paymentInstructions = document.getElementById('paymentInstructions');
+            const transactionId = document.getElementById('transactionId');
+            const paymentNumber = document.getElementById('paymentNumber');
+            const completePaymentBtn = document.getElementById('completePaymentBtn');
+            const placeOrderBtn = document.getElementById('placeOrderBtn');
+            
+            // Populate order summary
+            function populateOrderSummary() {
+                let orderHTML = '';
+                
+                // Add main product
+                orderHTML += `
+                    <tr>
+                        <td>
+                            <div class="product-name">${orderData.name}</div>
+                            <div class="product-details">${orderData.optionName || ''}</div>
+                        </td>
+                        <td class="price">${orderData.price}</td>
+                    </tr>
+                `;
+                
+                // Add user ID if provided
+                if (orderData.userId) {
+                    orderHTML += `
+                        <tr>
+                            <td>
+                                <div class="product-name">User ID</div>
+                                <div class="product-details">${orderData.userId}</div>
+                            </td>
+                            <td class="price">-</td>
+                        </tr>
+                    `;
+                }
+                
+                orderItems.innerHTML = orderHTML;
+                totalPrice.textContent = orderData.price;
+                
+                // Update payment instructions
+                updatePaymentInstructions(selectedPaymentMethod);
+            }
+            
+            populateOrderSummary();
+            
+            // Payment method selection
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    paymentOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Store selected payment method
+                    selectedPaymentMethod = this.getAttribute('data-method');
+                    
+                    // Update payment form title
+                    document.querySelector('.payment-form h3').textContent = `Complete Your ${selectedPaymentMethod.charAt(0).toUpperCase() + selectedPaymentMethod.slice(1)} Payment`;
+                    
+                    // Update payment form instructions
+                    updatePaymentInstructions(selectedPaymentMethod);
+                });
+            });
+            
+            // Update payment instructions based on provider
+            function updatePaymentInstructions(provider) {
+                const providerNames = {
+                    bkash: 'বিকাশ',
+                    nagad: 'নগদ',
+                    rocket: 'রকেট',
+                    upay: 'উপায়'
+                };
+                
+                const providerDialCodes = {
+                    bkash: '*247#',
+                    nagad: '*167#',
+                    rocket: '*322#',
+                    upay: '*867#'
+                };
+                
+                const instructions = `
+                    <h4>${providerNames[provider]} পেমেন্ট নির্দেশাবলী</h4>
+                    <ol>
+                        <li>আপনার ${providerNames[provider]} মোবাইল মেনুতে যান <strong>${providerDialCodes[provider]}</strong> ডায়াল করে অথবা ${providerNames[provider]} অ্যাপ খুলুন</li>
+                        <li><strong>"Send Money"</strong> বেছে নিন</li>
+                        <li>এখান থেকে ${providerNames[provider]} নম্বর কপি করুন এবং সেন্ড মানি করুন। <span class="account-number">${accountNumbers[provider]}</span> <button class="copy-btn-inline" onclick="copyNumber('${accountNumbers[provider]}')"><i class="fas fa-copy"></i> কপি</button></li>
+                        <li>পরিমাণ লিখুন: <strong>${paymentAmount}</strong></li>
+                        <li>নিশ্চিত করতে আপনার ${providerNames[provider]} মোবাইল মেনু পিন লিখুন।</li>
+                        <li>সবকিছু ঠিক থাকলে, আপনি ${providerNames[provider]} থেকে একটি নিশ্চিতকরণ বার্তা পাবেন।</li>
+                        <li>এখন নিচের বক্সে আপনার Transaction ID দিন এবং VERIFY বাটনে ক্লিক করুন। VERIFY সফল হলে Place order ক্লিক করুন।</li>
+                    </ol>
+                `;
+                
+                paymentInstructions.innerHTML = instructions;
+            }
+            
+            // Copy number function
+            window.copyNumber = function(number) {
+                navigator.clipboard.writeText(number).then(function() {
+                    showNotification('Number copied to clipboard!', 'success');
+                }).catch(function(err) {
+                    console.error('Could not copy text: ', err);
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = number;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showNotification('Number copied to clipboard!', 'success');
+                });
+            };
+            
+            // Complete payment button
+            completePaymentBtn.addEventListener('click', async function() {
+                // Validate form
+                if (!transactionId.value.trim()) {
+                    showNotification('Please enter your transaction ID', 'error');
+                    transactionId.focus();
+                    return;
+                }
+                
+                if (!paymentNumber.value.trim()) {
+                    showNotification('Please enter your payment number', 'error');
+                    paymentNumber.focus();
+                    return;
+                }
+                
+                // Validate customer information
+                if (!customerName.value.trim()) {
+                    showNotification('Please enter your name', 'error');
+                    customerName.focus();
+                    return;
+                }
+                
+                if (!customerEmail.value.trim()) {
+                    showNotification('Please enter your email', 'error');
+                    customerEmail.focus();
+                    return;
+                }
+                
+                if (!customerPhone.value.trim()) {
+                    showNotification('Please enter your phone number', 'error');
+                    customerPhone.focus();
+                    return;
+                }
+                
+                // Show loading state
+                if (isProcessing) return;
+                
+                isProcessing = true;
+                completePaymentBtn.disabled = true;
+                completePaymentBtn.textContent = 'Verifying...';
+                
+                try {
+                    // Simulate payment verification
+                    await simulatePaymentVerification(transactionId.value, paymentNumber.value, selectedPaymentMethod);
+                    
+                    // If verification is successful
+                    showNotification('Payment verified successfully!', 'success');
+                    
+                    // Generate invoice ID
+                    const invoiceId = generateInvoiceId();
+                    
+                    // Create order data
+                    const order = {
+                        invoice_id: invoiceId,
+                        customer_name: customerName.value,
+                        customer_email: customerEmail.value,
+                        customer_phone: customerPhone.value,
+                        product_name: orderData.name,
+                        product_option: orderData.optionName || '',
+                        product_price: orderData.price,
+                        product_user_id: orderData.userId || '',
+                        payment_method: selectedPaymentMethod,
+                        payment_provider: selectedPaymentMethod,
+                        transaction_id: transactionId.value,
+                        payment_number: paymentNumber.value,
+                        user_id: orderData.userId || '',
+                        status: 'completed',
+                        date: new Date().toISOString()
+                    };
+                    
+                    // Store order data for confirmation page (without sensitive payment info)
+                    const confirmationData = {
+                        ...order,
+                        id: invoiceId
+                    };
+                    
+                    // Remove sensitive payment info from confirmation data
+                    delete confirmationData.transaction_id;
+                    delete confirmationData.payment_number;
+                    
+                    localStorage.setItem('orderData', JSON.stringify(confirmationData));
+                    
+                    // Redirect to order confirmation page
+                    setTimeout(() => {
+                        isProcessing = false;
+                        completePaymentBtn.disabled = false;
+                        completePaymentBtn.textContent = 'Verify Payment';
+                        window.location.href = 'order-confirmation.html';
+                    }, 2000);
+                    
+                } catch (error) {
+                    showNotification('Payment verification failed. Please try again.', 'error');
+                    console.error('Payment verification error:', error);
+                    isProcessing = false;
+                    completePaymentBtn.disabled = false;
+                    completePaymentBtn.textContent = 'Verify Payment';
+                }
+            });
+            
+            // Place order button
+            placeOrderBtn.addEventListener('click', async function() {
+                // Validate form
+                if (!customerName.value.trim()) {
+                    showNotification('Please enter your name', 'error');
+                    customerName.focus();
+                    return;
+                }
+                
+                if (!customerEmail.value.trim()) {
+                    showNotification('Please enter your email', 'error');
+                    customerEmail.focus();
+                    return;
+                }
+                
+                if (!customerPhone.value.trim()) {
+                    showNotification('Please enter your phone number', 'error');
+                    customerPhone.focus();
+                    return;
+                }
+                
+                // Show loading state
+                if (isProcessing) return;
+                
+                isProcessing = true;
+                placeOrderBtn.classList.add('loading');
+                placeOrderBtn.disabled = true;
+                
+                try {
+                    // Generate invoice ID
+                    const invoiceId = generateInvoiceId();
+                    
+                    // Create order data
+                    const order = {
+                        invoice_id: invoiceId,
+                        customer_name: customerName.value,
+                        customer_email: customerEmail.value,
+                        customer_phone: customerPhone.value,
+                        product_name: orderData.name,
+                        product_option: orderData.optionName || '',
+                        product_price: orderData.price,
+                        product_user_id: orderData.userId || '',
+                        payment_method: selectedPaymentMethod,
+                        payment_provider: selectedPaymentMethod,
+                        user_id: orderData.userId || '',
+                        status: 'pending',
+                        date: new Date().toISOString()
+                    };
+                    
+                    // Store order data for confirmation page
+                    const confirmationData = {
+                        ...order,
+                        id: invoiceId
+                    };
+                    
+                    localStorage.setItem('orderData', JSON.stringify(confirmationData));
+                    
+                    // Remove loading state
+                    isProcessing = false;
+                    placeOrderBtn.classList.remove('loading');
+                    placeOrderBtn.disabled = false;
+                    
+                    // Show success message
+                    showNotification('Order placed successfully!', 'success');
+                    
+                    // Redirect to order confirmation page
+                    setTimeout(() => {
+                        window.location.href = 'order-confirmation.html';
+                    }, 1500);
+                } catch (error) {
+                    console.error('Error placing order:', error);
+                    showNotification('Error placing order. Please try again.', 'error');
+                    isProcessing = false;
+                    placeOrderBtn.classList.remove('loading');
+                    placeOrderBtn.disabled = false;
+                }
+            });
+            
+            // Helper function to generate invoice ID
+            function generateInvoiceId() {
+                const date = new Date();
+                const year = date.getFullYear().toString().substr(-2);
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+                return `INV${year}${month}${day}${random}`;
+            }
+            
+            // Notification function
+            function showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 3000);
+            }
+            
+            // Simulate payment verification function
+            async function simulatePaymentVerification(transactionId, paymentNumber, paymentMethod) {
+                // In a real application, you would verify the transaction with the payment provider's API
+                // For demo purposes, we'll simulate verification with a delay
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(true);
+                    }, 1000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
